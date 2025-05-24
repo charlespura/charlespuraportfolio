@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyPortfolio</title>
+  <!-- Add this inside the <head> of your HTML -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+  <script>
+    // Load theme before Tailwind runs
+    if (localStorage.theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class', // Enable class-based dark mode
+    };
+  </script>
+  <style>
+
+ 
+  @layer utilities {
+    @keyframes blob {
+      0%, 100% {
+        transform: translate(0px, 0px) scale(1);
+        border-radius: 50% 50% 50% 50%;
+      }
+      33% {
+        transform: translate(10px, -20px) scale(1.05);
+        border-radius: 60% 40% 30% 70%;
+      }
+      66% {
+        transform: translate(-20px, 10px) scale(0.95);
+        border-radius: 40% 60% 70% 30%;
+      }
+    }
+
+    .animate-blob {
+      animation: blob 8s infinite ease-in-out;
+    }
+  }
+
+
+    html {
+      scroll-behavior: smooth;
+    }
+    .theme-icon {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+  </style>
+</head>
+<body class="bg-white text-black transition-colors duration-300 dark:bg-black dark:text-white">
+<!-- Navbar -->
+<header class="w-full bg-white dark:bg-black shadow-md fixed top-0 left-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+    <div class="text-xl font-bold text-black dark:text-white md:text-lg sm:text-base">MyPortfolio</div>
+    <nav class="hidden md:flex space-x-6">
+      <a href="#about" class="hover:text-blue-600 dark:hover:text-blue-400 transition">About</a>
+      <a href="#skills" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Skills</a>
+      <a href="#projects" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Projects</a>
+      <a href="#contact" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Contact</a>
+    </nav>
+    <div class="flex items-center space-x-4">
+      <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition">
+        <svg id="theme-icon" class="theme-icon w-6 h-6 text-black dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <!-- Initial icon (light mode) -->
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 3v1m0 16v1m8.66-8.66h-1M4.34 12H3m15.66 4.66l-.7-.7M6.34 6.34l-.7-.7m12.02 12.02l-.7-.7M6.34 17.66l-.7-.7M12 5a7 7 0 100 14 7 7 0 000-14z" />
+        </svg>
+      </button>
+      <button id="hamburger" class="md:hidden p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition">
+        <svg class="w-6 h-6 text-black dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+    <nav id="mobile-menu" class="hidden md:hidden flex-col space-y-4 bg-white dark:bg-black p-4">
+      <a href="#about" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">About</a>
+      <a href="#skills" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Skills</a>
+      <a href="#projects" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Projects</a>
+      <a href="#contact" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Contact</a>
+    </nav>
+  </header>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+  </script>
+
+<!-- Hero Section -->
+<section class="relative h-screen flex flex-col justify-center items-center pt-24 bg-[#f5f5f5] dark:bg-gray-800 transition-colors duration-500">
+  <h1 class="text-5xl font-bold mb-4 text-black dark:text-white">Welcome to MyPortfolio</h1>
+  
+  <p class="text-lg mb-6 text-center max-w-2zxl text-gray-800 dark:text-gray-300">
+    Hi, I'm Charles Pura, passionate about web-based systems, Android Studio applications, and more.
+  </p>
+  
+  <a href="#about" class="bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-full shadow-md hover:opacity-80 transition">
+    Learn More
+  </a>
+
+<!-- Scroll Down Animation -->
+<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+  <div class="w-6 h-10 border-2 border-gray-700 dark:border-gray-300 rounded-full flex justify-center items-start overflow-hidden">
+    <div class="w-2 h-2 bg-gray-700 dark:bg-gray-300 rounded-full animate-scroll-dot mt-1"></div>
+  </div>
+</div>
+
+<!-- Add this to your <style> section or a <style> block -->
+<style>
+  @keyframes scrollDot {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    50% {
+      transform: translateY(1.5rem); /* Moves down */
+      opacity: 0.6;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-scroll-dot {
+    animation: scrollDot 1.2s infinite ease-in-out;
+  }
+</style>
+
+</section>
+
+<!-- About Section -->
+<section id="about" class="min-h-screen flex flex-col items-center justify-start bg-white dark:bg-black px-6 md:px-10 py-16">
+  <h2 class="text-3xl font-bold mt-0 mb-8 text-black dark:text-white text-center">About Me</h2>
+
+  <div class="w-full max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center gap-10">
+    
+    <!-- Left: Text -->
+    <div class="text-center md:text-left">
+      <p class="text-base leading-relaxed text-gray-700 dark:text-gray-300 font-mono"></p>
+        I'm a 3rd year BSIT student at Bestlink College of the Philippines.<br><br>
+        I build web-based systems using HTML, CSS, JavaScript, PHP, Bootstrap, and Tailwind CSS.<br><br>
+        I also enjoy developing mobile applications using Android Studio with Java.<br><br>
+        I'm passionate about creating efficient and user-friendly tech solutions.
+      </p>
+    </div>
+
+    <!-- Right: Profile Image -->
+    <div class="relative flex justify-center md:justify-end w-full md:w-auto">
+      <!-- Liquid blob background -->
+      <div class="absolute -top-6 -right-6 w-56 h-56 sm:w-72 sm:h-72 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 opacity-70 blur-3xl animate-blob z-0"></div>
+
+      <!-- Profile image -->
+      <img src="profile.jpg" alt="Profile Picture" id="profile-picture" class="relative z-10 w-24 h-24 sm:w-48 sm:h-48 rounded-full object-cover shadow-2xl border-4 border-white dark:border-gray-800 transition-transform duration-500 ease-in-out">
+      
+      <script>
+        const profilePicture = document.getElementById('profile-picture');
+        const aboutSection = document.getElementById('about');
+
+        function animateProfilePicture() {
+          profilePicture.classList.add('scale-110');
+          setTimeout(() => {
+        profilePicture.classList.remove('scale-110');
+          }, 1000); // Animation duration
+        }
+
+        let observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateProfilePicture();
+        }
+          });
+        }, { threshold: 0.5 });
+
+        observer.observe(aboutSection);
+      </script>
+
+      <style>
+        #profile-picture.scale-110 {
+          transform: scale(1.1);
+        }
+      </style></div>
+
+  </div>
+</section>
+
+
+<!-- Skills Section -->
+<section id="skills" class="min-h-screen flex flex-col items-center justify-start text-center bg-[#f5f5f5] dark:bg-gray-800 px-4 transition-colors duration-500 py-16">
+  <h2 class="text-3xl font-bold mt-0 mb-8 text-black dark:text-white text-center">Skills</h2>
+  <p class="text-lg mb-10 text-gray-700 dark:text-gray-300">These are the skills I excel in:</p>
+
+  <!-- Scrollable Skills Row (Top: Left to Right) -->
+  <div class="relative w-full overflow-hidden">
+    <div class="flex w-max animate-scroll-right gap-8">
+      <div class="flex gap-8">
+        <!-- Skills -->
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-2">HTML</h3>
+          <p>Structure and markup for web pages.</p>
+        </div>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-2">CSS</h3>
+          <p>Styling and layout of web pages.</p>
+        </div>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-yellow-500 dark:text-yellow-400 mb-2">JavaScript</h3>
+          <p>Interactivity and logic for websites.</p>
+        </div>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-purple-600 dark:text-purple-400 mb-2">PHP</h3>
+          <p>Server-side scripting for web apps.</p>
+        </div>
+      </div>
+      <!-- Duplicate for loop -->
+      <div class="flex gap-8">
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-2">HTML</h3>
+          <p>Structure and markup for web pages.</p>
+        </div>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-2">CSS</h3>
+          <p>Styling and layout of web pages.</p>
+        </div>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-yellow-500 dark:text-yellow-400 mb-2">JavaScript</h3>
+          <p>Interactivity and logic for websites.</p>
+        </div>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-purple-600 dark:text-purple-400 mb-2">PHP</h3>
+          <p>Server-side scripting for web apps.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scrollable Skills Row (Bottom: Right to Left) -->
+  <div class="relative w-full overflow-hidden mt-8">
+    <div class="flex w-max animate-scroll-left gap-8">
+      <div class="flex gap-8">
+        <!-- Skills -->
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-green-500 dark:text-green-400 mb-2">SQL</h3>
+          <p>Database management and queries.</p>
+        </div>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-teal-500 dark:text-teal-400 mb-2">Android Studio</h3>
+          <p>Building Android mobile applications.</p>
+        </div>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-red-500 dark:text-red-400 mb-2">Java</h3>
+          <p>Programming language for Android apps.</p>
+        </div>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-indigo-600 dark:text-indigo-400 mb-2">Bootstrap</h3>
+          <p>CSS framework for responsive design.</p>
+        </div>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-blue-500 dark:text-blue-400 mb-2">Tailwind CSS</h3>
+          <p>Utility-first CSS framework for custom designs.</p>
+        </div>
+      </div>
+      <!-- Duplicate -->
+      <div class="flex gap-8">
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-green-500 dark:text-green-400 mb-2">SQL</h3>
+          <p>Database management and queries.</p>
+        </div>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-teal-500 dark:text-teal-400 mb-2">Android Studio</h3>
+          <p>Building Android mobile applications.</p>
+        </div>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-red-500 dark:text-red-400 mb-2">Java</h3>
+          <p>Programming language for Android apps.</p>
+        </div>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-indigo-600 dark:text-indigo-400 mb-2">Bootstrap</h3>
+          <p>CSS framework for responsive design.</p>
+        </div>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
+          <h3 class="text-2xl font-semibold text-blue-500 dark:text-blue-400 mb-2">Tailwind CSS</h3>
+          <p>Utility-first CSS framework for custom designs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Animations and Scroll Styling -->
+<style>
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes scroll-right {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+
+  .animate-scroll-left {
+    animation: scroll-left 25s linear infinite;
+  }
+
+  .animate-scroll-right {
+    animation: scroll-right 25s linear infinite;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+
+
+  
+<section id="projects" class="min-h-screen flex flex-col items-center justify-center text-center bg-white dark:bg-black px-4 transition-colors duration-500 py-16">
+  <h2 class="text-3xl font-bold mb-4 text-black dark:text-white">Projects</h2>
+  <p class="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mb-12">
+    I've created <span class="font-semibold text-blue-600 dark:text-blue-400">152+</span> and counting — including <strong>Diagrams</strong>, <strong>Web Systems</strong>, <strong>CRUD Operations</strong>, <strong>Android Apps</strong>, and more. Check out some of my featured work below!
+  </p>
+  <p class="text-md text-gray-500 dark:text-gray-400 mb-6">
+    You can drag and swap any of the project cards below to rearrange them as you like.
+  </p>
+  
+
+  <!-- Draggable Containers -->
+  <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+    <!-- Logistics System -->
+    <div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move">
+      <button onclick="openImage('pictures/logistic1.png')">
+        <img src="pictures/logistic1.png" alt="Logistics System" class="rounded-lg mb-4 w-full object-cover h-64 cursor-pointer">
+      </button>
+      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Logistics System</h3>
+      <p class="text-gray-600 dark:text-gray-300">An efficient system for managing logistics, inventory, and delivery tracking.</p>
+    </div>
+
+    <!-- Threat Management System -->
+    <div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move">
+      <button onclick="openImage('pictures/threatmanagement.png')">
+        <img src="pictures/threatmanagement.png" alt="Threat Management System" class="rounded-lg mb-4 w-full object-cover h-64 cursor-pointer">
+      </button>
+      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Threat Management System</h3>
+      <p class="text-gray-600 dark:text-gray-300">A security-based system for managing and reporting threats effectively.</p>
+    </div>
+
+    <!-- PetFinder App -->
+    <div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move">
+      <button onclick="openImage('pictures/petfinder1.png')">
+        <img src="pictures/petfinder1.png" alt="PetFinder App" class="rounded-lg mb-2 w-full h-40 object-cover cursor-pointer">
+      </button>
+      <button onclick="openImage('pictures/petfinder2.png')">
+        <img src="pictures/petfinder2.png" alt="PetFinder App" class="rounded-lg mb-4 w-full h-40 object-cover cursor-pointer">
+      </button>
+      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">PetFinder App</h3>
+      <p class="text-gray-600 dark:text-gray-300">Generates pet info and scans QR codes to display pet profiles.</p>
+    </div>
+
+    <!-- Kids Learning App -->
+    <div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move">
+      <button onclick="openImage('pictures/kidslearningapp1.png')">
+        <img src="pictures/kidslearningapp1.png" alt="Kids Learning App" class="rounded-lg mb-2 w-full h-40 object-cover cursor-pointer">
+      </button>
+      <button onclick="openImage('pictures/kidslearningapp2.png')">
+        <img src="pictures/kidslearningapp2.png" alt="Kids Learning App" class="rounded-lg mb-4 w-full h-40 object-cover cursor-pointer">
+      </button>
+      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Kids Learning App</h3>
+      <p class="text-gray-600 dark:text-gray-300">Features fingerprint login, videos, and fun trivia quizzes for kids.</p>
+    </div>
+
+    <!-- Quiz App -->
+    <div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move">
+      <button onclick="openImage('pictures/quizapp.png')">
+        <img src="pictures/quizapp.png" alt="Quiz App" class="rounded-lg mb-2 w-full h-40 object-cover cursor-pointer">
+      </button>
+      <button onclick="openImage('pictures/quizapp2.png')">
+        <img src="pictures/quizapp2.png" alt="Quiz App" class="rounded-lg mb-4 w-full h-40 object-cover cursor-pointer">
+      </button>
+      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Quiz App</h3>
+      <p class="text-gray-600 dark:text-gray-300">Allows registration with email verification, password reset, and includes a leaderboard.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Fullscreen Image Viewer -->
+<div id="fullscreenViewer" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 hidden" onclick="closeImage()">
+  <img id="viewerImage" src="" alt="Full Image" class="max-h-[90%] max-w-[90%] rounded-lg shadow-xl border-4 border-white">
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script>
+  // Drag & Drop Init
+  new Sortable(document.getElementById('project-grid'), {
+    animation: 150,
+    ghostClass: 'opacity-50',
+  });
+
+  // Image Viewer
+  function openImage(src) {
+    const viewer = document.getElementById('fullscreenViewer');
+    const viewerImage = document.getElementById('viewerImage');
+    viewerImage.src = src;
+    viewer.classList.remove('hidden');
+  }
+
+  function closeImage() {
+    const viewer = document.getElementById('fullscreenViewer');
+    viewer.classList.add('hidden');
+    document.getElementById('viewerImage').src = '';
+  }
+</script>
+
+
+<!-- Contact Section -->
+<section id="contact" class="min-h-screen flex flex-col items-center justify-center text-center bg-[#f5f5f5] dark:bg-gray-800 px-4 transition-colors duration-500 py-16">
+  <h2 class="text-3xl font-bold mb-4 text-black dark:text-white">Contact</h2>
+  <p class="text-lg text-gray-700 dark:text-gray-300 mb-12">
+    I'd love to hear from you! Fill out the form below or use the links to connect with me.
+  </p>
+
+  <div class="flex flex-col md:flex-row gap-12 mb-6 w-full max-w-6xl px-4">
+    <!-- Left: Social Icons with Text -->
+    <div class="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left space-y-6">
+      <div>
+        <p class="text-lg text-gray-700 dark:text-gray-300">Feel free to drop me an email:</p>
+        <a href="mailto:charles051902pura@gmail.com" class="text-blue-600 hover:text-blue-800 text-3xl transition-all duration-300" title="Send Email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </div>
+
+      <div>
+        <p class="text-lg text-gray-700 dark:text-gray-300">Feel free to connect with me on social media:</p>
+        <a href="https://web.facebook.com/charlespuracp" target="_blank" class="text-blue-700 hover:text-blue-900 text-3xl transition-all duration-300" title="Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </div>
+
+      <div>
+        <p class="""text-lg text-gray-700 dark:text-gray-300">Check out my GitHub:</p>
+        <a href="""https://github.com/charlespura" target="""_blank" class="""text-gray-800 dark:text-white hover:text-gray-600 text-3xl transition-all duration-300" title="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Right: Form -->
+    <div class="w-full md:w-1/2">
+      <form id="contact-form" action="#" method="POST" class="space-y-6 bg-white dark:bg-gray-700 p-6 rounded-xl shadow-md">
+        <div class="flex flex-col space-y-3">
+          <!-- First Name -->
+          <div class="flex items-center border-b-2 border-gray-300 dark:border-gray-500">
+            <i class="fas fa-user text-gray-500 dark:text-gray-300 mr-3"></i>
+            <input type="text" name="first_name" placeholder="First Name" class="w-full py-2 px-4 bg-transparent text-gray-700 dark:text-gray-300 border-none focus:outline-none" required>
+          </div>
+          <!-- Last Name -->
+          <div class="flex items-center border-b-2 border-gray-300 dark:border-gray-500">
+            <i class="fas fa-user text-gray-500 dark:text-gray-300 mr-3"></i>
+            <input type="text" name="last_name" placeholder="Last Name" class="w-full py-2 px-4 bg-transparent text-gray-700 dark:text-gray-300 border-none focus:outline-none" required>
+          </div>
+          <!-- Email -->
+          <div class="flex items-center border-b-2 border-gray-300 dark:border-gray-500">
+            <i class="fas fa-envelope text-gray-500 dark:text-gray-300 mr-3"></i>
+            <input type="email" name="email" placeholder="Email" class="w-full py-2 px-4 bg-transparent text-gray-700 dark:text-gray-300 border-none focus:outline-none" required>
+          </div>
+          <!-- Phone (Optional) -->
+          <div class="flex items-center border-b-2 border-gray-300 dark:border-gray-500">
+            <i class="fas fa-phone-alt text-gray-500 dark:text-gray-300 mr-3"></i>
+            <input type="tel" name="phone" placeholder="Phone (Optional)" class="w-full py-2 px-4 bg-transparent text-gray-700 dark:text-gray-300 border-none focus:outline-none">
+          </div>
+          <!-- Message -->
+          <div class="flex items-center border-b-2 border-gray-300 dark:border-gray-500">
+            <i class="fas fa-comment-dots text-gray-500 dark:text-gray-300 mr-3"></i>
+            <textarea name="message" placeholder="Your Message" class="w-full py-2 px-4 bg-transparent text-gray-700 dark:text-gray-300 border-none focus:outline-none" rows="4" required></textarea>
+          </div>
+          <!-- Submit Button -->
+          <button type="submit" id="submit-btn" class="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-800 transition-all duration-300">
+            Send Message
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Get the form and submit button elements
+    const form = document.getElementById('contact-form');
+    const submitButton = document.getElementById('submit-btn');
+
+    // Add event listener for form submission
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();  // Prevent the default form submission
+
+      // Change the button text to "Message Sent"
+      submitButton.innerHTML = "Message Sent!!";
+      
+      // Add the animation class to the button
+      submitButton.classList.add("animate-message-sent");
+      
+      // Disable the button to prevent multiple submissions
+      submitButton.disabled = true;
+      
+      // Simulate form reset after 2 seconds
+      setTimeout(() => {
+        form.reset();  // Reset the form fields
+        submitButton.innerHTML = "Send Message";  // Reset button text
+        submitButton.disabled = false;  // Enable the button again
+        submitButton.classList.remove("animate-message-sent");  // Remove animation class
+      }, 2000);  // 2 seconds delay before reset
+    });
+  </script>
+
+  <style>
+    /* Animation for Message Sent button */
+    .animate-message-sent {
+      animation: fadeInScale 1s ease-out;
+    }
+
+    /* Keyframe animation for fade and scale effect */
+    @keyframes fadeInScale {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
+</section>
+
+  
+  
+  <!-- Footer -->
+  <footer class="bg-white dark:bg-black text-black dark:text-white py-4">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p>&copy; 2025 MyPortfolio. All rights reserved.</p>
+      <div class="flex justify-center space-x-4 mt-2">
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- Theme Toggle Script -->
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    function setDarkMode(isDark) {
+      document.documentElement.classList.toggle('dark', isDark);
+      localStorage.theme = isDark ? 'dark' : 'light';
+      themeIcon.innerHTML = isDark
+        ? `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.293 14.293a8 8 0 11-11.586 0 8.001 8.001 0 0111.586 0z" />`
+        : `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+             d="M12 3v1m0 16v1m8.66-8.66h-1M4.34 12H3m15.66 4.66l-.7-.7M6.34 6.34l-.7-.7m12.02 12.02l-.7-.7M6.34 17.66l-.7-.7M12 5a7 7 0 100 14 7 7 0 000-14z" />`;
+    }
+
+    // Button click
+    themeToggle.addEventListener('click', () => {
+      const isCurrentlyDark = document.documentElement.classList.contains('dark');
+      setDarkMode(!isCurrentlyDark);
+    });
+
+    // On load: Set correct icon
+    window.addEventListener('DOMContentLoaded', () => {
+      const isDark = localStorage.theme === 'dark';
+      setDarkMode(isDark);
+    });
+  </script>
+</body>
+</html>
