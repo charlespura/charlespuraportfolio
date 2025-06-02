@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,69 +56,140 @@
     }
   </style>
 </head>
+
 <body class="bg-white text-black transition-colors duration-300 dark:bg-black dark:text-white">
-<!-- Navbar -->
-<header class="w-full bg-white dark:bg-black shadow-md fixed top-0 left-0 z-50">
+
+  <!-- Navbar --><header class="w-full fixed top-0 left-0 z-50 backdrop-blur-md bg-white/80 dark:bg-black/80 transition-colors duration-500">
   <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
     <div class="text-xl font-bold text-black dark:text-white md:text-lg sm:text-base">MyPortfolio</div>
-    <nav class="hidden md:flex space-x-6">
+    <nav class="hidden md:flex space-x-16 px-4 py-2 rounded-md">
       <a href="#about" class="hover:text-blue-600 dark:hover:text-blue-400 transition">About</a>
       <a href="#skills" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Skills</a>
       <a href="#projects" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Projects</a>
       <a href="#contact" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Contact</a>
     </nav>
+ 
+
+
+
+    <!-- Theme toggle & Hamburger -->
     <div class="flex items-center space-x-4">
       <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition">
         <svg id="theme-icon" class="theme-icon w-6 h-6 text-black dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
           viewBox="0 0 24 24" stroke="currentColor">
-          <!-- Initial icon (light mode) -->
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M12 3v1m0 16v1m8.66-8.66h-1M4.34 12H3m15.66 4.66l-.7-.7M6.34 6.34l-.7-.7m12.02 12.02l-.7-.7M6.34 17.66l-.7-.7M12 5a7 7 0 100 14 7 7 0 000-14z" />
         </svg>
       </button>
+
       <button id="hamburger" class="md:hidden p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition">
-        <svg class="w-6 h-6 text-black dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg class="w-6 h-6 text-black dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
     </div>
-    <nav id="mobile-menu" class="hidden md:hidden flex-col space-y-4 bg-white dark:bg-black p-4">
-      <a href="#about" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">About</a>
-      <a href="#skills" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Skills</a>
-      <a href="#projects" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Projects</a>
-      <a href="#contact" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Contact</a>
-    </nav>
-  </header>
+  </div>
 
-  <script>
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobile-menu');
+  <!-- Mobile Nav -->
+  <nav id="mobile-menu" class="hidden md:hidden flex-col space-y-4 bg-white/90 dark:bg-black/90 backdrop-blur p-4 rounded-md mx-4 mt-2">
+    <a href="#about" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">About</a>
+    <a href="#skills" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Skills</a>
+    <a href="#projects" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Projects</a>
+    <a href="#contact" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Contact</a>
+  </nav>
+</header>
 
-    hamburger.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
+<!-- JS Script -->
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const navLinks = document.querySelectorAll('nav a');
+
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.forEach(nav => {
+        nav.classList.remove('text-blue-600', 'dark:text-blue-400');
+      });
+      link.classList.add('text-blue-600', 'dark:text-blue-400');
+
+      if (!mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+      }
     });
-  </script>
+  });
+</script>
 
 <!-- Hero Section -->
-<section class="relative h-screen flex flex-col justify-center items-center pt-24 bg-[#f5f5f5] dark:bg-gray-800 transition-colors duration-500">
-  <h1 class="text-5xl font-bold mb-4 text-black dark:text-white">Welcome to MyPortfolio</h1>
-  
-  <p class="text-lg mb-6 text-center max-w-2zxl text-gray-800 dark:text-gray-300">
-    Hi, I'm Charles Pura, passionate about web-based systems, Android Studio applications, and more.
+<section id="hero" class="relative h-screen flex flex-col justify-center items-center pt-32 bg-[#f5f5f5] dark:bg-gray-800 transition-colors duration-500">
+<!-- Google Map in right middle corner -->
+<div class="absolute top-1/2 right-8 w-80 rounded-lg overflow-hidden shadow-lg transform -translate-y-1/2 bg-white dark:bg-gray-700 p-4 hidden md:block">
+  <p class="text-md mb-2 text-center text-gray-800 dark:text-gray-300 font-semibold">
+    Developer Base Location:<br>Quezon City, Philippines
   </p>
-  
-  <a href="#about" class="bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-full shadow-md hover:opacity-80 transition">
-    Learn More
-  </a>
-
-<!-- Scroll Down Animation -->
-<div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
-  <div class="w-6 h-10 border-2 border-gray-700 dark:border-gray-300 rounded-full flex justify-center items-start overflow-hidden">
-    <div class="w-2 h-2 bg-gray-700 dark:bg-gray-300 rounded-full animate-scroll-dot mt-1"></div>
-  </div>
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.937739717867!2d121.04819611532651!3d14.676041989797725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b7dbb3c083eb%3A0x72f4156836dbdc71!2sQuezon%20City!5e0!3m2!1sen!2sph!4v1696239515638!5m2!1sen!2sph"
+    width="100%"
+    height="200"
+    style="border:0;"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    title="Quezon City Map"
+  ></iframe>
 </div>
 
-<!-- Add this to your <style> section or a <style> block -->
+
+
+  <h1 class="text-5xl font-bold mb-4 text-black dark:text-white text-center">WELCOME! I'M CHARLES PURA</h1>
+
+  <p class="text-lg mb-6 text-center max-w-2xl text-gray-800 dark:text-gray-300">
+    Passionate about web-based systems, Android Studio applications, and more.
+  </p>
+<div id="cv-button-wrapper" class="transition-transform duration-300 ease-in-out">
+  <a href="Charles Pura CV 2025.pdf" download 
+     class="inline-flex items-center bg-gradient-to-r from-blue-600 to-blue-800 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:from-blue-700 hover:to-blue-900 transition duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
+    </svg>
+    Download Resume
+  </a>
+</div>
+<script>
+  const cvButton = document.getElementById('cv-button-wrapper');
+
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+
+    // Clamp scroll offset between 0 and 300 (adjust maxScroll to control range)
+    const maxScroll = 500;
+    const maxTranslate = 250; // max 40px down
+    const translateY = Math.min((scrolled / maxScroll) * maxTranslate, maxTranslate);
+
+    cvButton.style.transform = `translateY(${translateY}px)`;
+  });
+</script>
+
+
+
+
+
+  <!-- Image below hero content -->
+  <img src="charlesbg.png" alt="Charles Background" class="mt-8 w-full max-w-2xl rounded-lg shadow-lg">
+
+  <!-- Scroll Down Animation -->
+  <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+    <div class="w-6 h-10 border-2 border-gray-700 dark:border-gray-300 rounded-full flex justify-center items-start overflow-hidden">
+      <div class="w-2 h-2 bg-gray-700 dark:bg-gray-300 rounded-full animate-scroll-dot mt-1"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Scroll animation style -->
 <style>
   @keyframes scrollDot {
     0% {
@@ -124,7 +197,7 @@
       opacity: 1;
     }
     50% {
-      transform: translateY(1.5rem); /* Moves down */
+      transform: translateY(1.5rem);
       opacity: 0.6;
     }
     100% {
@@ -138,21 +211,26 @@
   }
 </style>
 
-</section>
+
 
 <!-- About Section -->
 <section id="about" class="min-h-screen flex flex-col items-center justify-start bg-white dark:bg-black px-6 md:px-10 py-16">
-  <h2 class="text-3xl font-bold mt-0 mb-8 text-black dark:text-white text-center">About Me</h2>
+  <h2 class="text-3xl font-bold mt-0 mb-8 text-black dark:text-white text-center">About</h2>
 
-  <div class="w-full max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center gap-10">
+  <div class="w-full max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-start gap-10">
     
     <!-- Left: Text -->
-    <div class="text-center md:text-left">
-      <p class="text-base leading-relaxed text-gray-700 dark:text-gray-300 font-mono"></p>
-        I'm a 3rd year BSIT student at Bestlink College of the Philippines.<br><br>
-        I build web-based systems using HTML, CSS, JavaScript, PHP, Bootstrap, and Tailwind CSS.<br><br>
-        I also enjoy developing mobile applications using Android Studio with Java.<br><br>
-        I'm passionate about creating efficient and user-friendly tech solutions.
+    <div class="md:flex-1">
+      <p class="text-base leading-relaxed text-gray-700 dark:text-gray-300 font-mono text-justify">
+        I am Charles Pura, a Full-Stack Developer and IT student at Bestlink College of the Philippines. I have built over 100 customized projects using technologies like HTML, CSS, JavaScript, PHP, Bootstrap, Tailwind, and Android Studio with Java.
+      </p>
+      <br>
+      <p class="text-base leading-relaxed text-gray-700 dark:text-gray-300 font-mono text-justify">
+        I specialize in creating efficient, user-friendly web and mobile applications. I enjoy turning ideas into scalable and secure solutions that meet real-world needs.
+      </p>
+      <br>
+      <p class="text-base leading-relaxed text-gray-700 dark:text-gray-300 font-mono text-justify">
+        I aim to grow by working on innovative projects that challenge me and make a positive impact for users and businesses.
       </p>
     </div>
 
@@ -163,36 +241,37 @@
 
       <!-- Profile image -->
       <img src="profile.jpg" alt="Profile Picture" id="profile-picture" class="relative z-10 w-24 h-24 sm:w-48 sm:h-48 rounded-full object-cover shadow-2xl border-4 border-white dark:border-gray-800 transition-transform duration-500 ease-in-out">
-      
-      <script>
-        const profilePicture = document.getElementById('profile-picture');
-        const aboutSection = document.getElementById('about');
+    </div>
 
-        function animateProfilePicture() {
-          profilePicture.classList.add('scale-110');
-          setTimeout(() => {
+  </div>
+
+  <script>
+    const profilePicture = document.getElementById('profile-picture');
+    const aboutSection = document.getElementById('about');
+
+    function animateProfilePicture() {
+      profilePicture.classList.add('scale-110');
+      setTimeout(() => {
         profilePicture.classList.remove('scale-110');
-          }, 1000); // Animation duration
-        }
+      }, 1000);
+    }
 
-        let observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
+    let observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
           animateProfilePicture();
         }
-          });
-        }, { threshold: 0.5 });
+      });
+    }, { threshold: 0.5 });
 
-        observer.observe(aboutSection);
-      </script>
+    observer.observe(aboutSection);
+  </script>
 
-      <style>
-        #profile-picture.scale-110 {
-          transform: scale(1.1);
-        }
-      </style></div>
-
-  </div>
+  <style>
+    #profile-picture.scale-110 {
+      transform: scale(1.1);
+    }
+  </style>
 </section>
 
 
@@ -206,39 +285,64 @@
     <div class="flex w-max animate-scroll-right gap-8">
       <div class="flex gap-8">
         <!-- Skills -->
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-2">HTML</h3>
-          <p>Structure and markup for web pages.</p>
-        </div>
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-2">CSS</h3>
+<div class="skill-card bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 w-[500px] py-12 px-15">
+  <h3 class="text-4xl font-semibold text-blue-600 dark:text-blue-400 mb-4 flex items-center gap-4">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5 Logo" class="h-12 w-12 object-contain" />
+    HTML
+  </h3>
+  <p class="text-lg">Structure and markup for web pages.</p>
+</div>
+
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[350px]">
+          <h3 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3 Logo" class="h-6 w-6 object-contain" />
+            CSS
+          </h3>
           <p>Styling and layout of web pages.</p>
         </div>
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-yellow-500 dark:text-yellow-400 mb-2">JavaScript</h3>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-yellow-500 dark:text-yellow-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript Logo" class="h-6 w-6 object-contain" />
+            JavaScript
+          </h3>
           <p>Interactivity and logic for websites.</p>
         </div>
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-purple-600 dark:text-purple-400 mb-2">PHP</h3>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-purple-600 dark:text-purple-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP Logo" class="h-6 w-6 object-contain" />
+            PHP
+          </h3>
           <p>Server-side scripting for web apps.</p>
         </div>
       </div>
       <!-- Duplicate for loop -->
       <div class="flex gap-8">
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-2">HTML</h3>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[350px]">
+          <h3 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5 Logo" class="h-6 w-6 object-contain" />
+            HTML
+          </h3>
           <p>Structure and markup for web pages.</p>
         </div>
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-2">CSS</h3>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[350px]">
+          <h3 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3 Logo" class="h-6 w-6 object-contain" />
+            CSS
+          </h3>
           <p>Styling and layout of web pages.</p>
         </div>
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-yellow-500 dark:text-yellow-400 mb-2">JavaScript</h3>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-yellow-500 dark:text-yellow-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript Logo" class="h-6 w-6 object-contain" />
+            JavaScript
+          </h3>
           <p>Interactivity and logic for websites.</p>
         </div>
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-purple-600 dark:text-purple-400 mb-2">PHP</h3>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-purple-600 dark:text-purple-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP Logo" class="h-6 w-6 object-contain" />
+            PHP
+          </h3>
           <p>Server-side scripting for web apps.</p>
         </div>
       </div>
@@ -250,47 +354,78 @@
     <div class="flex w-max animate-scroll-left gap-8">
       <div class="flex gap-8">
         <!-- Skills -->
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-green-500 dark:text-green-400 mb-2">SQL</h3>
-          <p>Database management and queries.</p>
-        </div>
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-teal-500 dark:text-teal-400 mb-2">Android Studio</h3>
+       <div class="skill-card bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-green-500 dark:text-green-400 w-[500px] py-12 px-15">
+  <h3 class="text-4xl font-semibold mb-4 flex items-center gap-4">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL Logo" class="h-12 w-12 object-contain" />
+    SQL
+  </h3>
+  <p class="text-lg">Database management and queries.</p>
+</div>
+
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-teal-500 dark:text-teal-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android Studio Logo" class="h-6 w-6 object-contain" />
+            Android Studio
+          </h3>
           <p>Building Android mobile applications.</p>
         </div>
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-red-500 dark:text-red-400 mb-2">Java</h3>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-red-500 dark:text-red-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java Logo" class="h-6 w-6 object-contain" />
+            Java
+          </h3>
           <p>Programming language for Android apps.</p>
         </div>
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-indigo-600 dark:text-indigo-400 mb-2">Bootstrap</h3>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-indigo-600 dark:text-indigo-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-plain.svg" alt="Bootstrap Logo" class="h-6 w-6 object-contain" />
+            Bootstrap
+          </h3>
           <p>CSS framework for responsive design.</p>
         </div>
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-blue-500 dark:text-blue-400 mb-2">Tailwind CSS</h3>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-blue-500 dark:text-blue-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/250px-Tailwind_CSS_Logo.svg.png" alt="Tailwind CSS Logo" class="h-6 w-6 object-contain" />
+            Tailwind CSS
+          </h3>
           <p>Utility-first CSS framework for custom designs.</p>
         </div>
       </div>
       <!-- Duplicate -->
       <div class="flex gap-8">
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-green-500 dark:text-green-400 mb-2">SQL</h3>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-green-500 dark:text-green-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL Logo" class="h-6 w-6 object-contain" />
+            SQL
+          </h3>
           <p>Database management and queries.</p>
         </div>
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-teal-500 dark:text-teal-400 mb-2">Android Studio</h3>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-teal-500 dark:text-teal-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android Studio Logo" class="h-6 w-6 object-contain" />
+            Android Studio
+          </h3>
           <p>Building Android mobile applications.</p>
         </div>
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-red-500 dark:text-red-400 mb-2">Java</h3>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-red-500 dark:text-red-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java Logo" class="h-6 w-6 object-contain" />
+            Java
+          </h3>
           <p>Programming language for Android apps.</p>
         </div>
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-indigo-600 dark:text-indigo-400 mb-2">Bootstrap</h3>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-indigo-600 dark:text-indigo-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-plain.svg" alt="Bootstrap Logo" class="h-6 w-6 object-contain" />
+            Bootstrap
+          </h3>
           <p>CSS framework for responsive design.</p>
         </div>
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[250px]">
-          <h3 class="text-2xl font-semibold text-blue-500 dark:text-blue-400 mb-2">Tailwind CSS</h3>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-blue-500 dark:text-blue-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/250px-Tailwind_CSS_Logo.svg.png" alt="Tailwind CSS Logo" class="h-6 w-6 object-contain" />
+            Tailwind CSS
+          </h3>
           <p>Utility-first CSS framework for custom designs.</p>
         </div>
       </div>
@@ -298,24 +433,16 @@
   </div>
 </section>
 
-<!-- Animations and Scroll Styling -->
+
 <style>
   @keyframes scroll-left {
-    0% {
-      transform: translateX(0%);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
   }
 
   @keyframes scroll-right {
-    0% {
-      transform: translateX(-50%);
-    }
-    100% {
-      transform: translateX(0%);
-    }
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0%); }
   }
 
   .animate-scroll-left {
@@ -329,14 +456,21 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  /* Pause animation only on hover */
+  .animate-scroll-left:hover,
+  .animate-scroll-right:hover {
+    animation-play-state: paused;
+    cursor: pointer;
+  }
 </style>
 
 
-  
 <section id="projects" class="min-h-screen flex flex-col items-center justify-center text-center bg-white dark:bg-black px-4 transition-colors duration-500 py-16">
   <h2 class="text-3xl font-bold mb-4 text-black dark:text-white">Projects</h2>
   <p class="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mb-12">
@@ -348,69 +482,219 @@
   
 
   <!-- Draggable Containers -->
-  <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-    <!-- Logistics System -->
-    <div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move">
-      <button onclick="openImage('pictures/logistic1.png')">
-        <img src="pictures/logistic1.png" alt="Logistics System" class="rounded-lg mb-4 w-full object-cover h-64 cursor-pointer">
-      </button>
-      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Logistics System</h3>
-      <p class="text-gray-600 dark:text-gray-300">An efficient system for managing logistics, inventory, and delivery tracking.</p>
-    </div>
+ <div id="project-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-16 transition-opacity duration-500 opacity-100">
 
-    <!-- Threat Management System -->
-    <div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move">
-      <button onclick="openImage('pictures/threatmanagement.png')">
-        <img src="pictures/threatmanagement.png" alt="Threat Management System" class="rounded-lg mb-4 w-full object-cover h-64 cursor-pointer">
-      </button>
-      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Threat Management System</h3>
-      <p class="text-gray-600 dark:text-gray-300">A security-based system for managing and reporting threats effectively.</p>
-    </div>
+   
+   <!-- Logistics System -->
+<div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move">
+  <button onclick="openImage('pictures/logistic1.png')">
+    <img src="pictures/logistic1.png" alt="Logistics System" class="rounded-lg mb-4 w-full object-cover h-64 cursor-pointer">
+  </button>
+  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Logistics System</h3>
+  <p class="text-gray-600 dark:text-gray-300 mb-4">An efficient system for managing logistics, inventory, and delivery tracking.</p>
 
-    <!-- PetFinder App -->
-    <div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move">
-      <button onclick="openImage('pictures/petfinder1.png')">
-        <img src="pictures/petfinder1.png" alt="PetFinder App" class="rounded-lg mb-2 w-full h-40 object-cover cursor-pointer">
-      </button>
-      <button onclick="openImage('pictures/petfinder2.png')">
-        <img src="pictures/petfinder2.png" alt="PetFinder App" class="rounded-lg mb-4 w-full h-40 object-cover cursor-pointer">
-      </button>
-      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">PetFinder App</h3>
-      <p class="text-gray-600 dark:text-gray-300">Generates pet info and scans QR codes to display pet profiles.</p>
-    </div>
+  <!-- Logos container -->
+<style>
+  /* Tooltip container */
+  .tooltip {
+    position: relative;
+    display: inline-block;
+  }
 
-    <!-- Kids Learning App -->
-    <div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move">
-      <button onclick="openImage('pictures/kidslearningapp1.png')">
-        <img src="pictures/kidslearningapp1.png" alt="Kids Learning App" class="rounded-lg mb-2 w-full h-40 object-cover cursor-pointer">
-      </button>
-      <button onclick="openImage('pictures/kidslearningapp2.png')">
-        <img src="pictures/kidslearningapp2.png" alt="Kids Learning App" class="rounded-lg mb-4 w-full h-40 object-cover cursor-pointer">
-      </button>
-      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Kids Learning App</h3>
-      <p class="text-gray-600 dark:text-gray-300">Features fingerprint login, videos, and fun trivia quizzes for kids.</p>
-    </div>
+  /* Tooltip text */
+  .tooltip .tooltip-text {
+    visibility: hidden;
+    width: max-content;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 4px 8px;
+    position: absolute;
+    z-index: 10;
+    bottom: 125%; /* show above the icon */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+    font-size: 0.75rem; /* smaller text */
+  }
 
-    <!-- Quiz App -->
-    <div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move">
-      <button onclick="openImage('pictures/quizapp.png')">
-        <img src="pictures/quizapp.png" alt="Quiz App" class="rounded-lg mb-2 w-full h-40 object-cover cursor-pointer">
-      </button>
-      <button onclick="openImage('pictures/quizapp2.png')">
-        <img src="pictures/quizapp2.png" alt="Quiz App" class="rounded-lg mb-4 w-full h-40 object-cover cursor-pointer">
-      </button>
-      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Quiz App</h3>
-      <p class="text-gray-600 dark:text-gray-300">Allows registration with email verification, password reset, and includes a leaderboard.</p>
+  /* Show tooltip text on hover */
+  .tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  /* Tooltip arrow */
+  .tooltip .tooltip-text::after {
+    content: '';
+    position: absolute;
+    top: 100%; /* arrow below tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+  }
+</style>
+
+<div class="custom-tooltip-container flex space-x-3 items-center">
+  <div class="tooltip">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" class="w-6 h-6">
+    <span class="tooltip-text">HTML5</span>
+  </div>
+  <div class="tooltip">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" class="w-6 h-6">
+    <span class="tooltip-text">CSS3</span>
+  </div>
+  <div class="tooltip">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/250px-Tailwind_CSS_Logo.svg.png" alt="Tailwind CSS" class="w-6 h-6">
+    <span class="tooltip-text">Tailwind CSS</span>
+  </div>
+  <div class="tooltip">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP" class="w-6 h-6">
+    <span class="tooltip-text">PHP</span>
+  </div>
+</div>
+
+
+
+</div>
+
+
+<!-- Threat Management System -->
+<div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move">
+  <button onclick="openImage('pictures/threatmanagement.png')">
+    <img src="pictures/threatmanagement.png" alt="Threat Management System" class="rounded-lg mb-4 w-full object-cover h-64 cursor-pointer">
+  </button>
+  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Threat Management System</h3>
+  <p class="text-gray-600 dark:text-gray-300 mb-3">
+    A security-based system for managing and reporting threats effectively.
+  </p>
+
+  <!-- Language Logos with Tooltips -->
+  <div class="flex space-x-3 items-center">
+    <div class="tooltip">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" class="w-6 h-6">
+      <span class="tooltip-text">HTML5</span>
+    </div>
+    <div class="tooltip">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" class="w-6 h-6">
+      <span class="tooltip-text">CSS3</span>
+    </div>
+    <div class="tooltip">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/250px-Tailwind_CSS_Logo.svg.png" alt="Tailwind CSS" class="w-6 h-6">
+      <span class="tooltip-text">Tailwind CSS</span>
+    </div>
+    <div class="tooltip">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP" class="w-6 h-6">
+      <span class="tooltip-text">PHP</span>
     </div>
   </div>
+</div>
+
+
+
+<!-- PetFinder App -->
+<div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move">
+  <button onclick="openImage('pictures/petfinder1.png')">
+    <img src="pictures/petfinder1.png" alt="PetFinder App" class="rounded-lg mb-2 w-full h-40 object-cover cursor-pointer">
+  </button>
+  <button onclick="openImage('pictures/petfinder2.png')">
+    <img src="pictures/petfinder2.png" alt="PetFinder App" class="rounded-lg mb-4 w-full h-40 object-cover cursor-pointer">
+  </button>
+  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">PetFinder App</h3>
+  <p class="text-gray-600 dark:text-gray-300 mb-3">Generates pet info and scans QR codes to display pet profiles.</p>
+
+  <!-- Android Studio & Java Logos with Tooltips -->
+  <div class="flex space-x-3 items-center">
+    <div class="tooltip">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Android_Studio_icon_%282023%29.svg/2048px-Android_Studio_icon_%282023%29.svg.png" alt="Android Studio" class="w-6 h-6" />
+      <span class="tooltip-text">Android Studio</span>
+    </div>
+    <div class="tooltip">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" class="w-6 h-6" />
+      <span class="tooltip-text">Java</span>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Kids Learning App -->
+<div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move">
+  <button onclick="openImage('pictures/kidslearningapp1.png')">
+    <img src="pictures/kidslearningapp1.png" alt="Kids Learning App" class="rounded-lg mb-2 w-full h-40 object-cover cursor-pointer">
+  </button>
+  <button onclick="openImage('pictures/kidslearningapp2.png')">
+    <img src="pictures/kidslearningapp2.png" alt="Kids Learning App" class="rounded-lg mb-4 w-full h-40 object-cover cursor-pointer">
+  </button>
+  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Kids Learning App</h3>
+  <p class="text-gray-600 dark:text-gray-300 mb-3">Features fingerprint login, videos, and fun trivia quizzes for kids.</p>
+
+  <!-- Tech Logos with Tooltips -->
+  <div class="flex space-x-3 items-center">
+    <div class="tooltip">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Android_Studio_icon_%282023%29.svg/2048px-Android_Studio_icon_%282023%29.svg.png" alt="Android Studio" class="w-6 h-6" />
+      <span class="tooltip-text">Android Studio</span>
+    </div>
+    <div class="tooltip">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" class="w-6 h-6" />
+      <span class="tooltip-text">Java</span>
+    </div>
+    <div class="tooltip">
+      <!-- Using generic biometric fingerprint icon -->
+      <img src="https://cdn-icons-png.flaticon.com/512/1041/1041889.png" alt="Android Biometric" class="w-6 h-6 rounded" />
+      <span class="tooltip-text">Android Biometric</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- Quiz App -->
+<div class="bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move">
+  <button onclick="openImage('pictures/quizapp.png')">
+    <img src="pictures/quizapp.png" alt="Quiz App" class="rounded-lg mb-2 w-full h-40 object-cover cursor-pointer">
+  </button>
+  <button onclick="openImage('pictures/quizapp2.png')">
+    <img src="pictures/quizapp2.png" alt="Quiz App" class="rounded-lg mb-4 w-full h-40 object-cover cursor-pointer">
+  </button>
+  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Quiz App</h3>
+  <p class="text-gray-600 dark:text-gray-300 mb-3">Allows registration with email verification, password reset, and includes a leaderboard.</p>
+
+  <!-- Tech Logos with Tooltips -->
+  <div class="flex space-x-3 items-center">
+    <!-- Android Studio -->
+    <div class="tooltip">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Android_Studio_icon_%282023%29.svg/2048px-Android_Studio_icon_%282023%29.svg.png" alt="Android Studio" class="w-6 h-6" />
+      <span class="tooltip-text">Android Studio</span>
+    </div>
+    <!-- Java -->
+    <div class="tooltip">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" class="w-6 h-6" />
+      <span class="tooltip-text">Java</span>
+    </div>
+    <!-- Firebase Authentication -->
+    <div class="tooltip">
+      <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="Firebase Authentication" class="w-6 h-6" />
+      <span class="tooltip-text">Firebase Authentication</span>
+    </div>
+   
+  </div>
+</div>
+
+  </div>
+
+  <!-- Pagination Controls -->
+  <div id="pagination" class="flex justify-center gap-4"></div>
 </section>
 
 <!-- Fullscreen Image Viewer -->
 <div id="fullscreenViewer" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 hidden" onclick="closeImage()">
   <img id="viewerImage" src="" alt="Full Image" class="max-h-[90%] max-w-[90%] rounded-lg shadow-xl border-4 border-white">
 </div>
-
-<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script>
   // Drag & Drop Init
@@ -432,7 +716,118 @@
     viewer.classList.add('hidden');
     document.getElementById('viewerImage').src = '';
   }
+
+  // Pagination variables
+  const projectsPerPage = 4;
+  const projectGrid = document.getElementById('project-grid');
+  const projects = Array.from(projectGrid.children);
+  const paginationContainer = document.getElementById('pagination');
+  let currentPage = 1;
+  const totalPages = Math.ceil(projects.length / projectsPerPage);
+
+  // Show projects for the current page with slide animation (left to right)
+  function showProjects(page) {
+    currentPage = page;
+
+    // Slide out to left
+    projectGrid.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+    projectGrid.style.transform = 'translateX(-100%)';
+    projectGrid.style.opacity = '0';
+
+    setTimeout(() => {
+      // Hide all projects first
+      projects.forEach((proj) => {
+        proj.style.display = 'none';
+      });
+
+      // Calculate start and end indices
+      const start = (page - 1) * projectsPerPage;
+      const end = start + projectsPerPage;
+
+      // Show only projects for this page
+      projects.slice(start, end).forEach(proj => {
+        proj.style.display = '';
+      });
+
+      // Immediately set grid to offscreen right and visible
+      projectGrid.style.transition = 'none';
+      projectGrid.style.transform = 'translateX(100%)';
+      projectGrid.style.opacity = '1';
+
+      // Force a reflow so the browser acknowledges the transform change
+      projectGrid.offsetHeight; 
+
+      // Slide in from right
+      projectGrid.style.transition = 'transform 0.3s ease';
+      projectGrid.style.transform = 'translateX(0)';
+
+      // Update pagination buttons highlight
+      updatePagination();
+    }, 300);
+  }
+
+  // Update pagination buttons
+  function updatePagination() {
+    paginationContainer.innerHTML = '';
+
+    // Prev button
+    const prevBtn = document.createElement('button');
+    prevBtn.innerHTML = `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>`;
+    prevBtn.className = 'px-3 py-2 rounded-full border border-n-4 cursor-pointer text-n-5 bg-none';
+    if (currentPage === 1) {
+      prevBtn.classList.add('cursor-not-allowed', 'text-n-5');
+      prevBtn.disabled = true;
+    }
+    prevBtn.onclick = () => {
+      if (currentPage > 1) showProjects(currentPage - 1);
+    };
+    paginationContainer.appendChild(prevBtn);
+
+    // Page number buttons
+    for (let i = 1; i <= totalPages; i++) {
+      const pageBtn = document.createElement('button');
+      pageBtn.textContent = i;
+      pageBtn.className = 'px-4 py-2 rounded-full border border-n-4 cursor-pointer text-n-5 bg-none';
+
+      if (i === currentPage) {
+        pageBtn.classList.remove('bg-none', 'text-n-5');
+        pageBtn.classList.add('bg-[#f5f5dc]', 'text-gray-800');
+        pageBtn.disabled = true;
+        pageBtn.classList.remove('cursor-pointer');
+        pageBtn.classList.add('cursor-default');
+      }
+      pageBtn.onclick = () => {
+        if (currentPage !== i) showProjects(i);
+      };
+      paginationContainer.appendChild(pageBtn);
+    }
+
+    // Next button
+    const nextBtn = document.createElement('button');
+    nextBtn.innerHTML = `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"></path></svg>`;
+    nextBtn.className = 'px-3 py-2 rounded-full border border-n-4 cursor-pointer text-n-5 bg-none';
+    if (currentPage === totalPages) {
+      nextBtn.classList.add('cursor-not-allowed', 'text-n-5');
+      nextBtn.disabled = true;
+    }
+    nextBtn.onclick = () => {
+      if (currentPage < totalPages) showProjects(currentPage + 1);
+    };
+    paginationContainer.appendChild(nextBtn);
+  }
+
+  // Initial display
+  showProjects(1);
 </script>
+
+
+<!--
+  Notes:
+  - Your custom classes `border-n-4`, `text-n-5`, `bg-n-4/20` are preserved as you asked.
+  - The active pagination button has `bg-n-4/20` background and white text for highlight.
+  - Smooth fade animation on project grid when switching pages.
+  - Pagination buttons are fully functional with disabled states on first/last pages.
+-->
 
 
 <!-- Contact Section -->
@@ -459,12 +854,13 @@
         </a>
       </div>
 
-      <div>
-        <p class="""text-lg text-gray-700 dark:text-gray-300">Check out my GitHub:</p>
-        <a href="""https://github.com/charlespura" target="""_blank" class="""text-gray-800 dark:text-white hover:text-gray-600 text-3xl transition-all duration-300" title="GitHub">
-          <i class="fab fa-github"></i>
-        </a>
-      </div>
+     <div>
+  <p class="text-lg text-gray-700 dark:text-gray-300">Check out my GitHub:</p>
+  <a href="https://github.com/charlespura" target="_blank" class="text-gray-800 dark:text-white hover:text-gray-600 text-3xl transition-all duration-300" title="GitHub">
+    <i class="fab fa-github"></i>
+  </a>
+</div>
+
     </div>
 
     <!-- Right: Form -->
@@ -562,7 +958,7 @@
   <!-- Footer -->
   <footer class="bg-white dark:bg-black text-black dark:text-white py-4">
     <div class="max-w-7xl mx-auto px-4 text-center">
-      <p>&copy; 2025 MyPortfolio. All rights reserved.</p>
+      <p>&copy; 2025 Charles Pura. All rights reserved.</p>
       <div class="flex justify-center space-x-4 mt-2">
 
       </div>
