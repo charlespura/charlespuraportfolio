@@ -24,6 +24,10 @@
     };
   </script>
   <style>
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
 
  
   @layer utilities {
@@ -712,11 +716,55 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script>
+  // Function to handle drag-swap disabling and hiding paragraph
+  function handleResponsiveDragSwap() {
+    const infoParagraph = document.querySelector("#projects p.text-md.text-gray-500");
+    const projectCards = document.querySelectorAll("#project-grid > div");
+
+    if (window.innerWidth <= 640) { // e.g., 640px = Tailwind's sm breakpoint
+      // Hide the paragraph
+      if (infoParagraph) {
+        infoParagraph.style.display = "none";
+      }
+
+      // Remove drag-swap classes
+      projectCards.forEach(card => {
+        card.classList.remove("cursor-move");
+      });
+
+      // Destroy Sortable instance if it exists
+      if (sortableInstance) {
+        sortableInstance.destroy();
+        sortableInstance = null;
+      }
+    } else {
+      // Show the paragraph
+      if (infoParagraph) {
+        infoParagraph.style.display = "block";
+      }
+
+      // Re-add drag-swap classes
+      projectCards.forEach(card => {
+        if (!card.classList.contains("cursor-move")) {
+          card.classList.add("cursor-move");
+        }
+      });
+
+      // Re-initialize Sortable if not already initialized
+      if (!sortableInstance) {
+        initDragDrop();
+      }
+    }
+  }
+
   // Drag & Drop Init
-  new Sortable(document.getElementById('project-grid'), {
-    animation: 150,
-    ghostClass: 'opacity-50',
-  });
+  let sortableInstance;
+  function initDragDrop() {
+    sortableInstance = new Sortable(document.getElementById('project-grid'), {
+      animation: 150,
+      ghostClass: 'opacity-50',
+    });
+  }
 
   // Image Viewer
   function openImage(src) {
@@ -831,8 +879,16 @@
     paginationContainer.appendChild(nextBtn);
   }
 
-  // Initial display
-  showProjects(1);
+  // Run on page load
+  window.addEventListener("load", () => {
+    handleResponsiveDragSwap();
+    showProjects(1);
+  });
+
+  // Run on window resize
+  window.addEventListener("resize", () => {
+    handleResponsiveDragSwap();
+  });
 </script>
 
 
@@ -1006,5 +1062,6 @@
       setDarkMode(isDark);
     });
   </script>
+
 </body>
 </html>
