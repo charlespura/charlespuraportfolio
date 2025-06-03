@@ -1,8 +1,7 @@
 services:
   - type: web
     name: cpportfolio
-    env: php
+    env: docker
     plan: free
-    buildCommand: echo "No build needed"
-    startCommand: php -S 0.0.0.0:$PORT
+    dockerfilePath: ./Dockerfile
     branch: main
