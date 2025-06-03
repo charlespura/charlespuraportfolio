@@ -3,5 +3,5 @@ services:
     name: cpportfolio
     env: docker
     plan: free
-    dockerfilePath: ./Dockerfile
+    dockerfilePath: Dockerfile   
     branch: main

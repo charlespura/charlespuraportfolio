@@ -1,14 +1,10 @@
-# Use an official PHP image
-FROM php:8.2-cli
+# Use the official PHP Apache image
+FROM php:8.2-apache
 
-# Set working directory
-WORKDIR /var/www/html
+# Copy all project files to Apache web root
+COPY . /var/www/html/
 
-# Copy all files to the container
-COPY . .
+# Expose port 80 (default HTTP port)
+EXPOSE 80
 
-# Expose the port Render expects
-EXPOSE 10000
-
-# Run PHP's built-in server
-CMD ["php", "-S", "0.0.0.0:10000"]
+# Apache runs automatically with this image, so no CMD needed
