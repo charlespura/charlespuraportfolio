@@ -61,7 +61,129 @@ html, body {
   </style>
 </head>
 
-<body class="bg-white text-black transition-colors duration-300 dark:bg-black dark:text-white">
+<<body class="bg-white text-black transition-colors duration-300 dark:bg-black dark:text-white">
+
+<!-- Include Tailwind CSS CDN in your <head> if not already -->
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet" />
+
+<!-- Chatbot Widget -->
+<div id="chatbot-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-2">
+
+  <!-- Chat icon button -->
+  <button id="chatbot-toggle" 
+          class="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg focus:outline-none"
+          aria-label="Toggle Chatbot">
+    <!-- Chat icon SVG -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" 
+         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" 
+            d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4-.86L3 20l1.86-4A8.972 8.972 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+    </svg>
+  </button>
+
+  <!-- Chat window, hidden by default -->
+  <div id="chat-window" 
+       class="hidden w-80 bg-white dark:bg-gray-900 rounded-lg shadow-xl border border-gray-300 dark:border-gray-700 flex flex-col"
+       style="height: 400px;">
+
+    <!-- Header -->
+    <div class="bg-blue-600 text-white px-4 py-2 rounded-t-lg flex justify-between items-center">
+      <h2 class="font-semibold">Chat with Gemini</h2>
+      <button id="chat-close" aria-label="Close Chat" class="text-white hover:text-gray-200">&times;</button>
+    </div>
+
+    <!-- Chat messages container -->
+    <div id="chat-messages" 
+         class="flex-1 overflow-y-auto p-4 space-y-3 text-gray-800 dark:text-gray-200"
+         style="scroll-behavior: smooth;"></div>
+
+    <!-- Input area -->
+    <form id="chat-form" class="flex border-t border-gray-300 dark:border-gray-700">
+      <input type="text" id="chat-input" placeholder="Ask me something..." required
+             class="flex-grow px-3 py-2 focus:outline-none bg-gray-100 dark:bg-gray-800 text-black dark:text-white" />
+      <button type="submit" class="bg-blue-600 text-white px-4 hover:bg-blue-700 transition">Send</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById('chatbot-toggle');
+  const chatWindow = document.getElementById('chat-window');
+  const chatCloseBtn = document.getElementById('chat-close');
+  const chatForm = document.getElementById('chat-form');
+  const chatInput = document.getElementById('chat-input');
+  const chatMessages = document.getElementById('chat-messages');
+
+  // Toggle chat window visibility
+  toggleBtn.addEventListener('click', () => {
+    chatWindow.classList.toggle('hidden');
+    if (!chatWindow.classList.contains('hidden')) {
+      chatInput.focus();
+    }
+  });
+
+  chatCloseBtn.addEventListener('click', () => {
+    chatWindow.classList.add('hidden');
+  });
+
+  // Append message to chat with dark mode colors
+  function appendMessage(sender, text) {
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('rounded-lg', 'p-2', 'max-w-[75%]', 'break-words');
+
+    if(sender === 'user'){
+      // User bubble: light blue in light mode, darker blue in dark mode
+      messageDiv.classList.add(
+        'self-end', 'text-right', 
+        'bg-blue-100', 'dark:bg-blue-800', 'dark:text-blue-100'
+      );
+      messageDiv.textContent = text;
+    } else {
+      // Bot bubble: light gray in light mode, dark gray in dark mode
+      messageDiv.classList.add(
+        'self-start', 'text-left', 
+        'bg-gray-100', 'dark:bg-gray-700', 'dark:text-gray-200'
+      );
+      messageDiv.textContent = text;
+    }
+
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  // Handle form submission to send message
+  chatForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const message = chatInput.value.trim();
+    if (!message) return;
+
+    appendMessage('user', message);
+    chatInput.value = '';
+    chatInput.disabled = true;
+
+    try {
+      const res = await fetch('chatbot.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: new URLSearchParams({message})
+      });
+
+      const data = await res.json();
+
+      if(data.reply){
+        appendMessage('bot', data.reply);
+      } else {
+        appendMessage('bot', 'Error: ' + (data.error || 'Unknown error'));
+      }
+    } catch (error) {
+      appendMessage('bot', 'Network error. Please try again.');
+    }
+
+    chatInput.disabled = false;
+    chatInput.focus();
+  });
+</script>
 
   <!-- Navbar --><header class="w-full fixed top-0 left-0 z-50 backdrop-blur-md bg-white/80 dark:bg-black/80 transition-colors duration-500">
   <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
