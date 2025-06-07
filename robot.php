@@ -33,7 +33,7 @@
 <script>
 async function fetchSpotifyStatus() {
   try {
-    const response = await fetch('spotify_status.php');
+    const response = await fetch('spotify-status.php');
     const data = await response.json();
 
     const track = document.getElementById('spotify-track');
