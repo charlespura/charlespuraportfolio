@@ -30,8 +30,7 @@
 
 
 
-<script>
-async function fetchSpotifyStatus() {
+<script>async function fetchSpotifyStatus() {
   try {
     const response = await fetch('spotify-status.php');
     const data = await response.json();
@@ -52,7 +51,6 @@ async function fetchSpotifyStatus() {
     }
   } catch (err) {
     console.error('Spotify status error:', err);
-    // Optionally show a message on failure:
     document.getElementById('spotify-track').textContent = 'Failed to load Spotify status';
     document.getElementById('spotify-artist').textContent = '';
     document.getElementById('spotify-album-art').classList.add('hidden');
@@ -62,6 +60,7 @@ async function fetchSpotifyStatus() {
 // Initial fetch + repeat every 10 seconds
 fetchSpotifyStatus();
 setInterval(fetchSpotifyStatus, 10000);
+
 </script>
 
   <h1 class="text-5xl font-bold mb-4 text-black dark:text-white text-center">WELCOME! I'M CHARLES PURA</h1>
