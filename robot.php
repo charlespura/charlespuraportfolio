@@ -1,23 +1,21 @@
 
-<!-- Tailwind CSS CDN stylesheet link -->
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
 <section id="hero" class="relative h-screen flex flex-col justify-center items-center pt-25 bg-[#f5f5f5] dark:bg-gray-800 transition-colors duration-500 px-6 md:px-12">
 
 <!-- Spotify Now Playing - Left middle corner -->
-<!-- Mobile square button -->
+
+<!-- Mobile circular button -->
 <a
   id="spotify-link-mobile"
   href="#"
   target="_blank"
-  class="absolute top-1/2 left-8 w-8 h-8 rounded overflow-hidden shadow-lg bg-white dark:bg-gray-300 flex items-center justify-center md:hidden"
+  class="absolute top-1/2 left-8 w-8 h-8 rounded-full overflow-hidden shadow-lg bg-white dark:bg-gray-700 flex items-center justify-center md:hidden"
 >
-
   <img
     id="spotify-album-art-mobile"
     src=""
     alt="Album Art"
-    class="w-full h-full object-cover hidden"
+    class="w-full h-full object-cover rounded-full hidden"
   />
   <img
     id="spotify-logo-mobile"
@@ -26,7 +24,6 @@
     class="w-8 h-8"
   />
 </a>
-
 
 <!-- Desktop detailed widget -->
 <a
