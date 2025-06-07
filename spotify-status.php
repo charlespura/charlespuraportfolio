@@ -2,9 +2,17 @@
 // Your Spotify API credentials
 $client_id = '47ca30ec497f4e0eb84dde015e6fa71e';
 $client_secret = '717778de811f483b9c6acd2712a24173';
-$refresh_token = 'YOUR_SPOTIFY_REFRESH_TOKEN';
 
-// Get a new access token using the refresh token
+// Load refresh token from file
+$token_data = json_decode(file_get_contents('spotify_tokens.json'), true);
+$refresh_token = $token_data['refresh_token'] ?? null;
+
+if (!$refresh_token) {
+    echo json_encode(['error' => 'No refresh token available']);
+    exit;
+}
+
+// Get new access token using refresh token
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'https://accounts.spotify.com/api/token');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -20,8 +28,8 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, [
 $response = curl_exec($ch);
 curl_close($ch);
 
-$token_data = json_decode($response, true);
-$access_token = $token_data['access_token'] ?? null;
+$token_response = json_decode($response, true);
+$access_token = $token_response['access_token'] ?? null;
 
 if (!$access_token) {
     echo json_encode(['error' => 'Unable to get access token']);
