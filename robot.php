@@ -1,4 +1,6 @@
 
+<!-- Tailwind CSS CDN stylesheet link -->
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
 <section id="hero" class="relative h-screen flex flex-col justify-center items-center pt-25 bg-[#f5f5f5] dark:bg-gray-800 transition-colors duration-500 px-6 md:px-12">
 
