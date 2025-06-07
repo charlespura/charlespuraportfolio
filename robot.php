@@ -29,7 +29,7 @@
   id="spotify-link"
   href="#"
   target="_blank"
-  class="absolute top-1/2 left-4 w-80 max-w-full rounded-xl overflow-hidden shadow-xl transform -translate-y-1/2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 hidden md:flex items-center space-x-4 text-gray-700 dark:text-gray-300"
+  class="absolute top-1/2 left-4 w-100 max-w-full rounded-xl overflow-hidden shadow-xl transform -translate-y-1/2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 hidden md:flex items-center space-x-4 text-gray-700 dark:text-gray-300"
 >
   <img
     src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
