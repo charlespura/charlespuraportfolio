@@ -734,17 +734,7 @@ include("robot.php");
     <a href="#projects" class="flex flex-col items-center mt-2 group">
       <div class="w-1 h-32 bg-blue-600 dark:bg-blue-500 transition-transform group-hover:scale-y-110"></div>
     </a>
-    <script>
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute('href'));
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
-          }
-        });
-      });
-    </script>
+
   </div>
 <!-- Font Awesome for icons -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
