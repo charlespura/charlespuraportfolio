@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 
 $client_id = '47ca30ec497f4e0eb84dde015e6fa71e';
 $client_secret = '717778de811f483b9c6acd2712a24173';
-$token_file = __DIR__ . '/spotify_tokens.json';
+$token_file = sys_get_temp_dir() . '/spotify_tokens.json';
 
 // Load saved tokens
 if (!file_exists($token_file)) {
