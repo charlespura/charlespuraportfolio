@@ -12,6 +12,53 @@
   </a>
 </div>
 
+<script>
+async function fetchSpotifyStatus() {
+  try {
+    const response = await fetch('spotify-status.php');
+    const data = await response.json();
+
+    const track = document.getElementById('spotify-track');
+    const artist = document.getElementById('spotify-artist');
+    const albumArt = document.getElementById('spotify-album-art');
+    const link = document.getElementById('spotify-link');
+    const container = document.getElementById('spotify-container');
+
+    if (data.track && data.track !== 'Nothing playing right now') {
+      track.textContent = data.track;
+      artist.textContent = data.artist;
+      albumArt.src = data.album_art;
+      albumArt.classList.remove('hidden');
+      container.classList.remove('hidden');
+
+      // If you want to provide the track link
+      if (data.url) {
+        link.href = data.url;
+        link.classList.remove('pointer-events-none'); // make clickable
+      } else {
+        link.href = '#';
+        link.classList.add('pointer-events-none'); // disable click if no link
+      }
+    } else {
+      track.textContent = 'Nothing playing right now';
+      artist.textContent = '';
+      albumArt.classList.add('hidden');
+      container.classList.add('hidden'); // hide the whole widget if nothing
+    }
+  } catch (err) {
+    console.error('Spotify status error:', err);
+    document.getElementById('spotify-track').textContent = 'Failed to load Spotify status';
+    document.getElementById('spotify-artist').textContent = '';
+    document.getElementById('spotify-album-art').classList.add('hidden');
+  }
+}
+
+// Initial fetch + repeat every 10 seconds
+fetchSpotifyStatus();
+setInterval(fetchSpotifyStatus, 10000);
+</script>
+
+
   <!-- Google Map in right middle corner -->
   <div class="absolute top-1/2 right-8 w-80 rounded-lg overflow-hidden shadow-lg transform -translate-y-1/2 bg-white dark:bg-gray-700 p-4 hidden md:block">
     <p class="text-md mb-2 text-center text-gray-800 dark:text-gray-300 font-semibold">
@@ -33,38 +80,6 @@
 
 
 
-<script>async function fetchSpotifyStatus() {
-  try {
-    const response = await fetch('spotify-status.php');
-    const data = await response.json();
-
-    const track = document.getElementById('spotify-track');
-    const artist = document.getElementById('spotify-artist');
-    const albumArt = document.getElementById('spotify-album-art');
-
-    if (data.track && data.track !== 'Nothing playing right now') {
-      track.textContent = data.track;
-      artist.textContent = data.artist;
-      albumArt.src = data.album_art;
-      albumArt.classList.remove('hidden');
-    } else {
-      track.textContent = 'Nothing playing right now';
-      artist.textContent = '';
-      albumArt.classList.add('hidden');
-    }
-  } catch (err) {
-    console.error('Spotify status error:', err);
-    document.getElementById('spotify-track').textContent = 'Failed to load Spotify status';
-    document.getElementById('spotify-artist').textContent = '';
-    document.getElementById('spotify-album-art').classList.add('hidden');
-  }
-}
-
-// Initial fetch + repeat every 10 seconds
-fetchSpotifyStatus();
-setInterval(fetchSpotifyStatus, 10000);
-
-</script>
 
   <h1 class="text-5xl font-bold mb-4 text-black dark:text-white text-center">WELCOME! I'M CHARLES PURA</h1>
 
