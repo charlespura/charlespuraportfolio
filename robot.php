@@ -3,51 +3,89 @@
 
 <!-- Spotify Now Playing - Left middle corner -->
 <section id="hero" class="relative h-screen flex flex-col justify-center items-center pt-25 bg-[#f5f5f5] dark:bg-gray-800 transition-colors duration-500 px-6 md:px-12">
+<!-- Mobile square widget -->
+<a
+  id="spotify-link-mobile"
+  href="#"
+  target="_blank"
+  class="absolute top-1/2 left-4 w-16 h-16 rounded-md overflow-hidden shadow-lg bg-white dark:bg-gray-700 flex items-center justify-center md:hidden transform -translate-y-1/2"
+>
+  <img
+    id="spotify-album-art-mobile"
+    src=""
+    alt="Album Art"
+    class="w-full h-full object-cover hidden"
+  />
+  <img
+    id="spotify-logo-mobile"
+    src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
+    alt="Spotify Logo"
+    class="w-8 h-8"
+  />
+</a>
 
-  <!-- Mobile square widget -->
-  <a
-    id="spotify-link-mobile"
-    href="#"
-    target="_blank"
-    class="absolute top-1/2 left-4 w-16 h-16 rounded-md overflow-hidden shadow-lg bg-white dark:bg-gray-700 flex items-center justify-center md:hidden transform -translate-y-1/2"
-  >
-    <img
-      id="spotify-album-art-mobile"
-      src=""
-      alt="Album Art"
-      class="w-8 h-8 object-cover hidden"
-    />
-    <img
-      id="spotify-logo-mobile"
-      src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
-      alt="Spotify Logo"
-      class="w-8 h-8"
-    />
-  </a>
+<!-- Desktop widget -->
+<a
+  id="spotify-link"
+  href="#"
+  target="_blank"
+  class="absolute top-1/2 left-4 w-80 rounded-xl overflow-hidden shadow-lg transform -translate-y-1/2 bg-white dark:bg-gray-700 p-4 hidden md:flex items-center space-x-4 text-gray-700 dark:text-gray-300"
+>
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
+    alt="Spotify Logo"
+    class="w-8 h-8 flex-shrink-0"
+  />
+  <img
+    id="spotify-album-art"
+    src=""
+    alt="Album Art"
+    class="w-16 h-16 rounded-md hidden"
+  />
+  <div class="flex flex-col overflow-hidden">
+    <p id="spotify-track" class="font-bold truncate">Loading...</p>
+    <p id="spotify-artist" class="text-sm truncate"></p>
+  </div>
+</a>
 
-  <!-- Desktop widget -->
-  <a
-    id="spotify-link"
-    href="#"
-    target="_blank"
-    class="absolute top-1/2 left-4 w-80 rounded-xl overflow-hidden shadow-lg transform -translate-y-1/2 bg-white dark:bg-gray-700 p-4 hidden md:flex items-center space-x-4 text-gray-700 dark:text-gray-300"
-  >
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
-      alt="Spotify Logo"
-      class="w-8 h-8 flex-shrink-0"
-    />
-    <img
-      id="spotify-album-art"
-      src=""
-      alt="Album Art"
-      class="w-16 h-16 rounded-md hidden"
-    />
-    <div class="flex flex-col overflow-hidden">
-      <p id="spotify-track" class="font-bold truncate">Loading...</p>
-      <p id="spotify-artist" class="text-sm truncate"></p>
-    </div>
-  </a>
+
+
+<script>// Example JavaScript to update album art and toggle visibility
+function updateSpotifyWidget(track, artist, albumArtUrl, spotifyUrl) {
+  // Desktop
+  const desktopLink = document.getElementById('spotify-link');
+  const desktopAlbumArt = document.getElementById('spotify-album-art');
+  const desktopTrack = document.getElementById('spotify-track');
+  const desktopArtist = document.getElementById('spotify-artist');
+
+  // Mobile
+  const mobileLink = document.getElementById('spotify-link-mobile');
+  const mobileAlbumArt = document.getElementById('spotify-album-art-mobile');
+  const mobileLogo = document.getElementById('spotify-logo-mobile');
+
+  desktopLink.href = spotifyUrl;
+  mobileLink.href = spotifyUrl;
+
+  desktopTrack.textContent = track || "Unknown Track";
+  desktopArtist.textContent = artist || "";
+
+  if (albumArtUrl) {
+    desktopAlbumArt.src = albumArtUrl;
+    desktopAlbumArt.classList.remove('hidden');
+
+    mobileAlbumArt.src = albumArtUrl;
+    mobileAlbumArt.classList.remove('hidden');
+
+    mobileLogo.classList.add('hidden');
+  } else {
+    desktopAlbumArt.classList.add('hidden');
+
+    mobileAlbumArt.classList.add('hidden');
+    mobileLogo.classList.remove('hidden');
+  }
+}
+</script>
+
 
 
 <script>
@@ -104,45 +142,6 @@
     });
   });
 </script>
-
-<script>// Example JavaScript to update album art and toggle visibility
-function updateSpotifyWidget(track, artist, albumArtUrl, spotifyUrl) {
-  // Desktop
-  const desktopLink = document.getElementById('spotify-link');
-  const desktopAlbumArt = document.getElementById('spotify-album-art');
-  const desktopTrack = document.getElementById('spotify-track');
-  const desktopArtist = document.getElementById('spotify-artist');
-
-  // Mobile
-  const mobileLink = document.getElementById('spotify-link-mobile');
-  const mobileAlbumArt = document.getElementById('spotify-album-art-mobile');
-  const mobileLogo = document.getElementById('spotify-logo-mobile');
-
-  desktopLink.href = spotifyUrl;
-  mobileLink.href = spotifyUrl;
-
-  desktopTrack.textContent = track || "Unknown Track";
-  desktopArtist.textContent = artist || "";
-
-  if (albumArtUrl) {
-    desktopAlbumArt.src = albumArtUrl;
-    desktopAlbumArt.classList.remove('hidden');
-
-    mobileAlbumArt.src = albumArtUrl;
-    mobileAlbumArt.classList.remove('hidden');
-
-    mobileLogo.classList.add('hidden');
-  } else {
-    desktopAlbumArt.classList.add('hidden');
-
-    mobileAlbumArt.classList.add('hidden');
-    mobileLogo.classList.remove('hidden');
-  }
-}
-</script>
-
-
-
 
 
   <!-- Google Map in right middle corner -->
