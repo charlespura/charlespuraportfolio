@@ -18,13 +18,14 @@ Skills:
 - Bootstrap, Tailwind CSS
 
 Projects:
+-I've created 172+ projects, including diagrams, web systems, and CRUD.
 - Logistics System: manages logistics, inventory, and delivery tracking using HTML5, CSS3, Tailwind CSS, PHP.
 - Threat Management System: security system for reporting threats with HTML5, CSS3, Tailwind CSS, PHP.
 - PetFinder App: Android app that generates pet info and scans QR codes using Android Studio and Java.
 - Kids Learning App: Android app with fingerprint login, videos, and trivia quizzes built with Android Studio and Java.
 
 Contact:
-- Email: your_email@example.com
+- Email: charles051902pura@gmail.com
 - GitHub: https://github.com/charlespura
 - Location: Quezon City, Philippines
 
