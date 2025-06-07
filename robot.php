@@ -1,69 +1,91 @@
+
+
 <section id="hero" class="relative h-screen flex flex-col justify-center items-center pt-25 bg-[#f5f5f5] dark:bg-gray-800 transition-colors duration-500 px-6 md:px-12">
 
 <!-- Spotify Now Playing - Left middle corner -->
-<a id="spotify-link" href="#" target="_blank" class="absolute top-1/2 left-8 w-80 rounded-lg overflow-hidden shadow-lg transform -translate-y-1/2 bg-white dark:bg-gray-700 p-4 hidden md:flex items-center space-x-4 text-gray-700 dark:text-gray-300">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" alt="Spotify Logo" class="w-8 h-8" />
-  <img id="spotify-album-art" src="" alt="Album Art" class="w-16 h-16 rounded-md hidden" />
+
+<!-- Mobile circular button -->
+<a
+  id="spotify-link-mobile"
+  href="#"
+  target="_blank"
+  class="absolute top-1/2 left-8 w-16 h-16 rounded-full overflow-hidden shadow-lg bg-white dark:bg-gray-700 flex items-center justify-center md:hidden"
+>
+  <img
+    id="spotify-album-art-mobile"
+    src=""
+    alt="Album Art"
+    class="w-full h-full object-cover rounded-full hidden"
+  />
+  <img
+    id="spotify-logo-mobile"
+    src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
+    alt="Spotify Logo"
+    class="w-8 h-8"
+  />
+</a>
+
+<!-- Desktop detailed widget -->
+<a
+  id="spotify-link"
+  href="#"
+  target="_blank"
+  class="absolute top-1/2 left-8 w-80 rounded-lg overflow-hidden shadow-lg transform -translate-y-1/2 bg-white dark:bg-gray-700 p-4 hidden md:flex items-center space-x-4 text-gray-700 dark:text-gray-300"
+>
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
+    alt="Spotify Logo"
+    class="w-8 h-8"
+  />
+  <img
+    id="spotify-album-art"
+    src=""
+    alt="Album Art"
+    class="w-16 h-16 rounded-md hidden"
+  />
   <div class="flex flex-col">
     <p id="spotify-track" class="font-bold">Loading...</p>
     <p id="spotify-artist" class="text-sm"></p>
   </div>
 </a>
 
-<script>
-  async function fetchSpotifyStatus() {
-    try {
-      const response = await fetch('spotify-status.php');
-      const data = await response.json();
 
-      const track = document.getElementById('spotify-track');
-      const artist = document.getElementById('spotify-artist');
-      const albumArt = document.getElementById('spotify-album-art');
-      const link = document.getElementById('spotify-link');
+<script>// Example JavaScript to update album art and toggle visibility
+function updateSpotifyWidget(track, artist, albumArtUrl, spotifyUrl) {
+  // Desktop
+  const desktopLink = document.getElementById('spotify-link');
+  const desktopAlbumArt = document.getElementById('spotify-album-art');
+  const desktopTrack = document.getElementById('spotify-track');
+  const desktopArtist = document.getElementById('spotify-artist');
 
-      if (data.track && data.track !== 'Nothing playing right now') {
-        track.textContent = data.track;
-        artist.textContent = data.artist;
-        albumArt.src = data.album_art;
-        albumArt.classList.remove('hidden');
-        link.classList.remove('hidden');
+  // Mobile
+  const mobileLink = document.getElementById('spotify-link-mobile');
+  const mobileAlbumArt = document.getElementById('spotify-album-art-mobile');
+  const mobileLogo = document.getElementById('spotify-logo-mobile');
 
-        if (data.url) {
-          link.href = data.url;             // set actual Spotify track URL
-          link.target = '_blank';           // open in new tab
-          link.classList.remove('pointer-events-none'); // make clickable
-        } else {
-          link.removeAttribute('href');    // remove href to disable link
-          link.classList.add('pointer-events-none');    // disable pointer events
-        }
-      } else {
-        link.classList.add('hidden');       // hide widget if no track
-      }
-    } catch (err) {
-      console.error('Spotify status error:', err);
-      document.getElementById('spotify-link').classList.add('hidden');
-    }
+  desktopLink.href = spotifyUrl;
+  mobileLink.href = spotifyUrl;
+
+  desktopTrack.textContent = track || "Unknown Track";
+  desktopArtist.textContent = artist || "";
+
+  if (albumArtUrl) {
+    desktopAlbumArt.src = albumArtUrl;
+    desktopAlbumArt.classList.remove('hidden');
+
+    mobileAlbumArt.src = albumArtUrl;
+    mobileAlbumArt.classList.remove('hidden');
+
+    mobileLogo.classList.add('hidden');
+  } else {
+    desktopAlbumArt.classList.add('hidden');
+
+    mobileAlbumArt.classList.add('hidden');
+    mobileLogo.classList.remove('hidden');
   }
-
-  fetchSpotifyStatus();
-  setInterval(fetchSpotifyStatus, 10000);
-
-
-  // Smooth scroll only for internal anchors that start with #
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const href = this.getAttribute('href');
-      // Only scroll if href is a valid ID selector
-      if (href.length > 1 && !href.includes(' ')) {
-        const target = document.querySelector(href);
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    });
-  });
+}
 </script>
+
 
 
 
@@ -84,6 +106,8 @@
       title="Quezon City Map"
     ></iframe>
   </div>
+
+
 
 
 
@@ -147,7 +171,6 @@
   </div>
 
  
-
 
 </section>
  <!-- Scroll Down Animation -->
@@ -262,3 +285,58 @@
     animation: scrollDot 1.2s infinite ease-in-out;
   }
 </style>
+
+<script>
+  async function fetchSpotifyStatus() {
+    try {
+      const response = await fetch('spotify-status.php');
+      const data = await response.json();
+
+      const track = document.getElementById('spotify-track');
+      const artist = document.getElementById('spotify-artist');
+      const albumArt = document.getElementById('spotify-album-art');
+      const link = document.getElementById('spotify-link');
+
+      if (data.track && data.track !== 'Nothing playing right now') {
+        track.textContent = data.track;
+        artist.textContent = data.artist;
+        albumArt.src = data.album_art;
+        albumArt.classList.remove('hidden');
+        link.classList.remove('hidden');
+
+        if (data.url) {
+          link.href = data.url;             // set actual Spotify track URL
+          link.target = '_blank';           // open in new tab
+          link.classList.remove('pointer-events-none'); // make clickable
+        } else {
+          link.removeAttribute('href');    // remove href to disable link
+          link.classList.add('pointer-events-none');    // disable pointer events
+        }
+      } else {
+        link.classList.add('hidden');       // hide widget if no track
+      }
+    } catch (err) {
+      console.error('Spotify status error:', err);
+      document.getElementById('spotify-link').classList.add('hidden');
+    }
+  }
+
+  fetchSpotifyStatus();
+  setInterval(fetchSpotifyStatus, 10000);
+
+
+  // Smooth scroll only for internal anchors that start with #
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      // Only scroll if href is a valid ID selector
+      if (href.length > 1 && !href.includes(' ')) {
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  });
+</script>
