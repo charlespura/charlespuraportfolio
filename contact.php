@@ -97,15 +97,10 @@ $formData = [
 // Send to Firestore
 if (!sendToFirestore($formData, $firebaseUrl, $firebaseApiKey)) {
     http_response_code(500);
-    echo json_encode(["error" => "Failed to send message to database. Please try again later."]);
+    echo json_encode(["error" => "Failed to send message to Creator. Please try again later."]);
     exit;
 }
 
-// Send email notification
-if (!sendEmailNotification($formData, 'charles051902pura@gmail.com')) {
-    http_response_code(500);
-    echo json_encode(["error" => "Failed to send email notification. Please try again later."]);
-    exit;
-}
+
 
 echo json_encode(["success" => "Thank you for your message! 😊"]);

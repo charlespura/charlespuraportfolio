@@ -955,7 +955,7 @@ include("robot.php");
   </a>
 </div>
 
-  <!-- Projects section -->
+
 <!-- Projects section -->
 <section id="projects" class="min-h-screen flex flex-col items-center justify-center text-center bg-white dark:bg-black px-4 transition-colors duration-500 py-16">
   <h2 class="text-3xl font-bold mb-4 text-black dark:text-white">Projects</h2>
@@ -1391,7 +1391,6 @@ include("robot.php");
     handleResponsiveDragSwap();
   });
 </script>
-
 <!-- Contact Section -->
 <section id="contact" class="min-h-screen flex flex-col items-center justify-center text-center bg-[#f5f5f5] dark:bg-gray-800 px-4 transition-colors duration-500 py-16">
   <h2 class="text-3xl font-bold mb-4 text-black dark:text-white">Contact</h2>
@@ -1416,27 +1415,17 @@ include("robot.php");
         </a>
       </div>
 
-     <div>
-  <p class="text-lg text-gray-700 dark:text-gray-300">Check out my GitHub:</p>
-  <a href="https://github.com/charlespura" target="_blank" class="text-gray-800 dark:text-white hover:text-gray-600 text-3xl transition-all duration-300" title="GitHub">
-    <i class="fab fa-github"></i>
-  </a>
-</div>
-
+      <div>
+        <p class="text-lg text-gray-700 dark:text-gray-300">Check out my GitHub:</p>
+        <a href="https://github.com/charlespura" target="_blank" class="text-gray-800 dark:text-white hover:text-gray-600 text-3xl transition-all duration-300" title="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
     </div>
-
-
-
-
-<!-- Add Google reCAPTCHA script in the head or before closing body -->
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-<!-- ... inside your form, before the submit button -->
-<div class="g-recaptcha" data-sitekey="6LcR6FYrAAAAAJSvMc6lYhnTDao8kKfyy8lBfTJC"></div>
 
     <!-- Right: Form -->
     <div class="w-full md:w-1/2">
-      <form id="contact-form" action="#" method="POST" class="space-y-6 bg-white dark:bg-gray-700 p-6 rounded-xl shadow-md">
+      <form id="contact-form" action="contact.php" method="POST" class="space-y-6 bg-white dark:bg-gray-700 p-6 rounded-xl shadow-md">
         <div class="flex flex-col space-y-3">
           <!-- First Name -->
           <div class="flex items-center border-b-2 border-gray-300 dark:border-gray-500">
@@ -1463,6 +1452,10 @@ include("robot.php");
             <i class="fas fa-comment-dots text-gray-500 dark:text-gray-300 mr-3"></i>
             <textarea name="message" placeholder="Your Message" class="w-full py-2 px-4 bg-transparent text-gray-700 dark:text-gray-300 border-none focus:outline-none" rows="4" required></textarea>
           </div>
+
+          <!-- Google reCAPTCHA widget -->
+          <div class="g-recaptcha" data-sitekey="6LcR6FYrAAAAAJSvMc6lYhnTDao8kKfyy8lBfTJC"></div>
+
           <!-- Submit Button -->
           <button type="submit" id="submit-btn" class="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-800 transition-all duration-300">
             Send Message
@@ -1472,84 +1465,83 @@ include("robot.php");
     </div>
   </div>
 
-  
-<!-- Add SweetAlert2 CDN in your HTML head or just before this script -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Google reCAPTCHA script -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-<script>
-const form = document.getElementById('contact-form');
-const submitBtn = document.getElementById('submit-btn');
+  <script>
+    const form = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('submit-btn');
 
-// Function to detect if dark mode is enabled (using 'dark' class on html or body)
-function isDarkMode() {
-  return document.documentElement.classList.contains('dark') || document.body.classList.contains('dark');
-}
-
-// Show SweetAlert2 with Tailwind styling and theme aware colors
-function showAlert(type, message) {
-  const dark = isDarkMode();
-
-  Swal.fire({
-    icon: type, // 'success', 'error', 'warning', 'info', 'question'
-    title: message,
-    background: dark ? '#1f2937' : '#fff', // Tailwind slate-800 for dark, white for light
-    color: dark ? '#f9fafb' : '#111827', // Tailwind gray-50 for dark, gray-900 for light
-    confirmButtonColor: dark ? '#2563eb' : '#3b82f6', // blue-600 dark / blue-500 light
-    customClass: {
-      popup: 'rounded-xl shadow-lg',
-      title: 'text-lg font-semibold',
-      confirmButton: 'py-2 px-4 rounded-md'
-    },
-    timer: type === 'success' ? 3000 : undefined, // auto close success after 3s
-    timerProgressBar: type === 'success'
-  });
-}
-
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const recaptchaResponse = grecaptcha.getResponse();
-  if (!recaptchaResponse) {
-    showAlert('error', 'Please complete the reCAPTCHA.');
-    return;
-  }
-
-  const formData = new FormData(form);
-  formData.append('g-recaptcha-response', recaptchaResponse);
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Sending...';
-
-  try {
-    const response = await fetch('contact.php', {
-      method: 'POST',
-      body: formData
-    });
-
-    const result = await response.json();
-
-    if (result.success) {
-      showAlert('success', result.success);
-      form.reset();
-      grecaptcha.reset();
-    } else {
-      showAlert('error', result.error || 'Oops! Something went wrong.');
-      grecaptcha.reset();
+    // Function to detect if dark mode is enabled (using 'dark' class on html or body)
+    function isDarkMode() {
+      return document.documentElement.classList.contains('dark') || document.body.classList.contains('dark');
     }
-  } catch (error) {
-    console.error('AJAX error:', error);
-    showAlert('error', 'Error sending message. Please try again.');
-    grecaptcha.reset();
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Send Message';
-  }
-});
-</script>
 
+    // Show SweetAlert2 with Tailwind styling and theme aware colors
+    function showAlert(type, message) {
+      const dark = isDarkMode();
 
+      Swal.fire({
+        icon: type, // 'success', 'error', 'warning', 'info', 'question'
+        title: message,
+        background: dark ? '#1f2937' : '#fff', // Tailwind slate-800 for dark, white for light
+        color: dark ? '#f9fafb' : '#111827', // Tailwind gray-50 for dark, gray-900 for light
+        confirmButtonColor: dark ? '#2563eb' : '#3b82f6', // blue-600 dark / blue-500 light
+        customClass: {
+          popup: 'rounded-xl shadow-lg',
+          title: 'text-lg font-semibold',
+          confirmButton: 'py-2 px-4 rounded-md'
+        },
+        timer: type === 'success' ? 3000 : undefined, // auto close success after 3s
+        timerProgressBar: type === 'success'
+      });
+    }
 
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const recaptchaResponse = grecaptcha.getResponse();
+      if (!recaptchaResponse) {
+        showAlert('error', 'Please complete the reCAPTCHA.');
+        return;
+      }
+
+      const formData = new FormData(form);
+      formData.append('g-recaptcha-response', recaptchaResponse);
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      try {
+        const response = await fetch('contact.php', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          showAlert('success', result.success);
+          form.reset();
+          grecaptcha.reset();
+        } else {
+          showAlert('error', result.error || 'Oops! Something went wrong.');
+          grecaptcha.reset();
+        }
+      } catch (error) {
+        console.error('AJAX error:', error);
+        showAlert('error', 'Error sending message. Please try again.');
+        grecaptcha.reset();
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+      }
+    });
+  </script>
 </section>
+
 
   
   
