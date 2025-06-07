@@ -9,7 +9,7 @@
   id="spotify-link-mobile"
   href="#"
   target="_blank"
-  class="absolute top-1/2 left-8 w-16 h-16 rounded-full overflow-hidden shadow-lg bg-white dark:bg-gray-700 flex items-center justify-center md:hidden"
+  class="absolute top-1/2 left-8 w-8 h-8 rounded-full overflow-hidden shadow-lg bg-white dark:bg-gray-700 flex items-center justify-center md:hidden"
 >
   <img
     id="spotify-album-art-mobile"
