@@ -28,6 +28,9 @@ if (isset($_GET['code']) && !empty($_GET['code'])) {
     $data = json_decode($response, true);
 
     if (isset($data['access_token'])) {
+        // Add expires_at timestamp (current time + expires_in seconds)
+        $data['expires_at'] = time() + $data['expires_in'];
+
         // Save tokens securely - adjust path & permissions as needed
         $saved = file_put_contents(__DIR__ . '/spotify_tokens.json', json_encode($data, JSON_PRETTY_PRINT));
         if ($saved === false) {
@@ -35,6 +38,7 @@ if (isset($_GET['code']) && !empty($_GET['code'])) {
         } else {
             echo "Authorization successful! Tokens saved.";
         }
+
         echo "<pre>" . print_r($data, true) . "</pre>";
     } else {
         echo "Error exchanging code: " . htmlspecialchars($response);
