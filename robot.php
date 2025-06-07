@@ -1,58 +1,56 @@
 <section id="hero" class="relative h-screen flex flex-col justify-center items-center pt-25 bg-[#f5f5f5] dark:bg-gray-800 transition-colors duration-500 px-6 md:px-12">
 
-<!-- Spotify Now Playing - Left middle corner -->
-<div class="absolute top-1/2 left-8 w-80 rounded-lg overflow-hidden shadow-lg transform -translate-y-1/2 bg-white dark:bg-gray-700 p-4 hidden md:flex items-center space-x-4 text-gray-700 dark:text-gray-300" id="spotify-container">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" alt="Spotify Logo" class="w-8 h-8" />
-  <a id="spotify-link" href="#" target="_blank" class="flex items-center space-x-2">
+  <!-- Spotify Now Playing - Left middle corner -->
+  <a id="spotify-link" href="#" target="_blank" class="absolute top-1/2 left-8 w-80 rounded-lg overflow-hidden shadow-lg transform -translate-y-1/2 bg-white dark:bg-gray-700 p-4 hidden md:flex items-center space-x-4 text-gray-700 dark:text-gray-300">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" alt="Spotify Logo" class="w-8 h-8" />
     <img id="spotify-album-art" src="" alt="Album Art" class="w-16 h-16 rounded-md hidden" />
     <div class="flex flex-col">
       <p id="spotify-track" class="font-bold">Loading...</p>
       <p id="spotify-artist" class="text-sm"></p>
     </div>
   </a>
-</div>
 
-<script>
-async function fetchSpotifyStatus() {
-  try {
-    const response = await fetch('spotify-status.php');
-    const data = await response.json();
+  <script>
+    async function fetchSpotifyStatus() {
+      try {
+        const response = await fetch('spotify-status.php');
+        const data = await response.json();
 
-    const track = document.getElementById('spotify-track');
-    const artist = document.getElementById('spotify-artist');
-    const albumArt = document.getElementById('spotify-album-art');
-    const link = document.getElementById('spotify-link');
-    const container = document.getElementById('spotify-container');
+        const track = document.getElementById('spotify-track');
+        const artist = document.getElementById('spotify-artist');
+        const albumArt = document.getElementById('spotify-album-art');
+        const link = document.getElementById('spotify-link');
 
-    if (data.track && data.track !== 'Nothing playing right now') {
-      track.textContent = data.track;
-      artist.textContent = data.artist;
-      albumArt.src = data.album_art;
-      albumArt.classList.remove('hidden');
-      container.classList.remove('hidden');
+        if (data.track && data.track !== 'Nothing playing right now') {
+          track.textContent = data.track;
+          artist.textContent = data.artist;
+          albumArt.src = data.album_art;
+          albumArt.classList.remove('hidden');
+          link.classList.remove('hidden');
 
-      if (data.url) {
-        link.href = data.url; // open Spotify track page
-        link.target = '_blank'; // ensure it opens in a new tab
-        link.classList.remove('pointer-events-none'); // make clickable
-      } else {
-        link.href = '#';
-        link.classList.add('pointer-events-none'); // disable click if no link
+          if (data.url) {
+            link.href = data.url; // open Spotify track page
+            link.target = '_blank'; // ensure it opens in a new tab
+            link.classList.remove('pointer-events-none'); // make clickable
+          } else {
+            link.href = '#';
+            link.classList.add('pointer-events-none'); // disable click if no link
+          }
+        } else {
+          link.classList.add('hidden'); // hide widget
+        }
+      } catch (err) {
+        console.error('Spotify status error:', err);
+        document.getElementById('spotify-link').classList.add('hidden');
       }
-    } else {
-      container.classList.add('hidden'); // hide widget
     }
-  } catch (err) {
-    console.error('Spotify status error:', err);
-    document.getElementById('spotify-container').classList.add('hidden');
-  }
-}
 
-// Initial fetch + repeat every 10 seconds
-fetchSpotifyStatus();
-setInterval(fetchSpotifyStatus, 10000);
+    // Initial fetch + repeat every 10 seconds
+    fetchSpotifyStatus();
+    setInterval(fetchSpotifyStatus, 10000);
+  </script>
 
-</script>
+
 
 
   <!-- Google Map in right middle corner -->
