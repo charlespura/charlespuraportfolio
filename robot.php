@@ -31,31 +31,27 @@ async function fetchSpotifyStatus() {
       albumArt.classList.remove('hidden');
       container.classList.remove('hidden');
 
-      // If you want to provide the track link
       if (data.url) {
-        link.href = data.url;
+        link.href = data.url; // open Spotify track page
+        link.target = '_blank'; // ensure it opens in a new tab
         link.classList.remove('pointer-events-none'); // make clickable
       } else {
         link.href = '#';
         link.classList.add('pointer-events-none'); // disable click if no link
       }
     } else {
-      track.textContent = 'Nothing playing right now';
-      artist.textContent = '';
-      albumArt.classList.add('hidden');
-      container.classList.add('hidden'); // hide the whole widget if nothing
+      container.classList.add('hidden'); // hide widget
     }
   } catch (err) {
     console.error('Spotify status error:', err);
-    document.getElementById('spotify-track').textContent = 'Failed to load Spotify status';
-    document.getElementById('spotify-artist').textContent = '';
-    document.getElementById('spotify-album-art').classList.add('hidden');
+    document.getElementById('spotify-container').classList.add('hidden');
   }
 }
 
 // Initial fetch + repeat every 10 seconds
 fetchSpotifyStatus();
 setInterval(fetchSpotifyStatus, 10000);
+
 </script>
 
 
