@@ -58,7 +58,6 @@ fetchSpotifyStatus();
 setInterval(fetchSpotifyStatus, 10000);
 </script>
 
-
   <!-- Google Map in right middle corner -->
   <div class="absolute top-1/2 right-8 w-80 rounded-lg overflow-hidden shadow-lg transform -translate-y-1/2 bg-white dark:bg-gray-700 p-4 hidden md:block">
     <p class="text-md mb-2 text-center text-gray-800 dark:text-gray-300 font-semibold">
@@ -75,6 +74,7 @@ setInterval(fetchSpotifyStatus, 10000);
       title="Quezon City Map"
     ></iframe>
   </div>
+
 
 
 
