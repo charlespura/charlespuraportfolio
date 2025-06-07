@@ -75,8 +75,7 @@ if ($http_code == 204 || $http_code == 404) {
     echo json_encode([
         'track' => 'Nothing playing right now',
         'artist' => '',
-        'album_art' => '',
-        'url' => ''
+        'album_art' => ''
     ]);
     exit;
 }
@@ -86,8 +85,7 @@ if (!$data || !isset($data['item'])) {
     echo json_encode([
         'track' => 'Nothing playing right now',
         'artist' => '',
-        'album_art' => '',
-        'url' => ''
+        'album_art' => ''
     ]);
     exit;
 }
@@ -95,11 +93,9 @@ if (!$data || !isset($data['item'])) {
 $track_name = $data['item']['name'] ?? 'Unknown Track';
 $artist_name = $data['item']['artists'][0]['name'] ?? 'Unknown Artist';
 $album_art_url = $data['item']['album']['images'][0]['url'] ?? '';
-$track_url = $data['item']['external_urls']['spotify'] ?? '';
 
 echo json_encode([
     'track' => $track_name,
     'artist' => $artist_name,
-    'album_art' => $album_art_url,
-    'url' => $track_url
+    'album_art' => $album_art_url
 ]);
