@@ -4,7 +4,8 @@ $client_id = '47ca30ec497f4e0eb84dde015e6fa71e';
 $client_secret = '717778de811f483b9c6acd2712a24173';
 
 // Load refresh token from file
-$token_data = json_decode(file_get_contents(__DIR__ . '/token/spotify_tokens.json'), true);
+//$token_data = json_decode(file_get_contents(__DIR__ . '/token/spotify_tokens.json'), true);
+$token_data = json_decode(file_get_contents('/var/www/html//token/spotify_tokens.json'), true);
 
 $refresh_token = $token_data['refresh_token'] ?? null;
 

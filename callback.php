@@ -28,8 +28,9 @@ curl_close($ch);
 $data = json_decode($response, true);
 if (isset($data['access_token'])) {
     // Save refresh token & access token securely
-  file_put_contents(__DIR__ . '/token/spotify_tokens.json', json_encode($data));
+  //file_put_contents(__DIR__ . '/token/spotify_tokens.json', json_encode($data));
 
+file_put_contents('/var/www/html/token/spotify_tokens.json', json_encode($data));
 
     echo "Authorization successful! Refresh token saved.";
 } else {
