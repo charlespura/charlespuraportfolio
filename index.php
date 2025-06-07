@@ -734,7 +734,6 @@ include("robot.php");
     <a href="#projects" class="flex flex-col items-center mt-2 group">
       <div class="w-1 h-32 bg-blue-600 dark:bg-blue-500 transition-transform group-hover:scale-y-110"></div>
     </a>
-
     <script>
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
