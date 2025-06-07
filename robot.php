@@ -48,7 +48,74 @@
   </div>
 </a>
 
+<script>
+  async function fetchSpotifyStatus() {
+    try {
+      const response = await fetch('spotify-status.php');
+      const data = await response.json();
 
+      const track = document.getElementById('spotify-track');
+      const artist = document.getElementById('spotify-artist');
+      const albumArt = document.getElementById('spotify-album-art');
+      const link = document.getElementById('spotify-link');
+
+      const mobileLink = document.getElementById('spotify-link-mobile');
+      const mobileAlbumArt = document.getElementById('spotify-album-art-mobile');
+      const mobileLogo = document.getElementById('spotify-logo-mobile');
+
+      if (data.track && data.track !== 'Nothing playing right now') {
+        // Desktop
+        track.textContent = data.track + " (Listening now)";
+        artist.textContent = data.artist;
+        albumArt.src = data.album_art;
+        albumArt.classList.remove('hidden');
+        link.classList.remove('hidden');
+
+        // Mobile
+        mobileAlbumArt.src = data.album_art;
+        mobileAlbumArt.classList.remove('hidden');
+        mobileLogo.classList.add('hidden');
+        mobileLink.classList.remove('hidden');
+
+        if (data.url) {
+          link.href = data.url;
+          link.target = '_blank';
+          link.classList.remove('pointer-events-none');
+
+          mobileLink.href = data.url;
+          mobileLink.target = '_blank';
+          mobileLink.classList.remove('pointer-events-none');
+        } else {
+          link.removeAttribute('href');
+          link.classList.add('pointer-events-none');
+
+          mobileLink.removeAttribute('href');
+          mobileLink.classList.add('pointer-events-none');
+        }
+      } else {
+        // Not listening: show "Not listening" message on desktop
+        track.textContent = "Not listening";
+        artist.textContent = "";
+        albumArt.classList.add('hidden');
+
+        // Hide desktop if you prefer, or show minimal info
+        link.classList.remove('pointer-events-none');
+
+        // Hide mobile widget
+        mobileAlbumArt.classList.add('hidden');
+        mobileLogo.classList.remove('hidden');
+        mobileLink.classList.add('pointer-events-none');
+      }
+    } catch (err) {
+      console.error('Spotify status error:', err);
+      document.getElementById('spotify-link').classList.add('hidden');
+      document.getElementById('spotify-link-mobile').classList.add('hidden');
+    }
+  }
+
+  fetchSpotifyStatus();
+  setInterval(fetchSpotifyStatus, 10000);
+</script>
 
 <script>// Example JavaScript to update album art and toggle visibility
 function updateSpotifyWidget(track, artist, albumArtUrl, spotifyUrl) {
@@ -88,60 +155,6 @@ function updateSpotifyWidget(track, artist, albumArtUrl, spotifyUrl) {
 
 
 
-<script>
-  async function fetchSpotifyStatus() {
-    try {
-      const response = await fetch('spotify-status.php');
-      const data = await response.json();
-
-      const track = document.getElementById('spotify-track');
-      const artist = document.getElementById('spotify-artist');
-      const albumArt = document.getElementById('spotify-album-art');
-      const link = document.getElementById('spotify-link');
-
-      if (data.track && data.track !== 'Nothing playing right now') {
-        track.textContent = data.track;
-        artist.textContent = data.artist;
-        albumArt.src = data.album_art;
-        albumArt.classList.remove('hidden');
-        link.classList.remove('hidden');
-
-        if (data.url) {
-          link.href = data.url;             // set actual Spotify track URL
-          link.target = '_blank';           // open in new tab
-          link.classList.remove('pointer-events-none'); // make clickable
-        } else {
-          link.removeAttribute('href');    // remove href to disable link
-          link.classList.add('pointer-events-none');    // disable pointer events
-        }
-      } else {
-        link.classList.add('hidden');       // hide widget if no track
-      }
-    } catch (err) {
-      console.error('Spotify status error:', err);
-      document.getElementById('spotify-link').classList.add('hidden');
-    }
-  }
-
-  fetchSpotifyStatus();
-  setInterval(fetchSpotifyStatus, 10000);
-
-
-  // Smooth scroll only for internal anchors that start with #
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const href = this.getAttribute('href');
-      // Only scroll if href is a valid ID selector
-      if (href.length > 1 && !href.includes(' ')) {
-        const target = document.querySelector(href);
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    });
-  });
-</script>
 
 
   <!-- Google Map in right middle corner -->
