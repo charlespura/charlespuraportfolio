@@ -1,5 +1,14 @@
-  <!-- Hero Section -->
-<section id="hero" class="relative h-screen flex flex-col justify-center items-center pt-25 bg-[#f5f5f5] dark:bg-gray-800 transition-colors duration-500">
+<section id="hero" class="relative h-screen flex flex-col justify-center items-center pt-25 bg-[#f5f5f5] dark:bg-gray-800 transition-colors duration-500 px-6 md:px-12">
+
+  <!-- Spotify Now Playing - Left middle corner -->
+  <div class="absolute top-1/2 left-8 w-80 rounded-lg overflow-hidden shadow-lg transform -translate-y-1/2 bg-white dark:bg-gray-700 p-4 hidden md:flex items-center space-x-4 text-gray-700 dark:text-gray-300">
+    <img id="spotify-album-art" src="" alt="Album Art" class="w-16 h-16 rounded-md hidden" />
+    <div class="flex flex-col">
+      <p id="spotify-track" class="font-bold">Loading...</p>
+      <p id="spotify-artist" class="text-sm"></p>
+    </div>
+  </div>
+
   <!-- Google Map in right middle corner -->
   <div class="absolute top-1/2 right-8 w-80 rounded-lg overflow-hidden shadow-lg transform -translate-y-1/2 bg-white dark:bg-gray-700 p-4 hidden md:block">
     <p class="text-md mb-2 text-center text-gray-800 dark:text-gray-300 font-semibold">
@@ -16,6 +25,44 @@
       title="Quezon City Map"
     ></iframe>
   </div>
+
+
+
+
+
+<script>
+async function fetchSpotifyStatus() {
+  try {
+    const response = await fetch('spotify_status.php');
+    const data = await response.json();
+
+    const track = document.getElementById('spotify-track');
+    const artist = document.getElementById('spotify-artist');
+    const albumArt = document.getElementById('spotify-album-art');
+
+    if (data.track && data.track !== 'Nothing playing right now') {
+      track.textContent = data.track;
+      artist.textContent = data.artist;
+      albumArt.src = data.album_art;
+      albumArt.classList.remove('hidden');
+    } else {
+      track.textContent = 'Nothing playing right now';
+      artist.textContent = '';
+      albumArt.classList.add('hidden');
+    }
+  } catch (err) {
+    console.error('Spotify status error:', err);
+    // Optionally show a message on failure:
+    document.getElementById('spotify-track').textContent = 'Failed to load Spotify status';
+    document.getElementById('spotify-artist').textContent = '';
+    document.getElementById('spotify-album-art').classList.add('hidden');
+  }
+}
+
+// Initial fetch + repeat every 10 seconds
+fetchSpotifyStatus();
+setInterval(fetchSpotifyStatus, 10000);
+</script>
 
   <h1 class="text-5xl font-bold mb-4 text-black dark:text-white text-center">WELCOME! I'M CHARLES PURA</h1>
 
