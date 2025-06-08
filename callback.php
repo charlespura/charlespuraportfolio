@@ -5,17 +5,18 @@ $redirect_uri = 'https://cpportfolio.onrender.com/callback.php';
 
 $firebaseUrl = "https://firestore.googleapis.com/v1/projects/charlespuraportfolio/databases/(default)/documents/spotifyTokens";
 $firebaseApiKey = "AIzaSyCWI8MnGPuFXFjBvV6eL1vuVDEUOaoUNXo";
-$docId = "spotify";  // Document ID for storing tokens
+$docId = "spotify";
 
-function firestorePatchDocument($firebaseUrl, $apiKey, $docId = "spotify", $data) {
+// Firestore PATCH helper
+function firestorePatchDocument($firebaseUrl, $apiKey, $data, $docId) {
     $url = $firebaseUrl . "/" . $docId . "?key=" . $apiKey;
     $fields = [];
     foreach ($data as $key => $value) {
         if (is_int($value)) {
             $fields[$key] = ["integerValue" => strval($value)];
-        } else if (is_float($value)) {
+        } elseif (is_float($value)) {
             $fields[$key] = ["doubleValue" => $value];
-        } else if (is_string($value)) {
+        } elseif (is_string($value)) {
             $fields[$key] = ["stringValue" => $value];
         } else {
             $fields[$key] = ["stringValue" => json_encode($value)];
@@ -49,24 +50,19 @@ if (isset($_GET['code']) && !empty($_GET['code'])) {
         'Authorization: Basic ' . base64_encode("$client_id:$client_secret"),
         'Content-Type: application/x-www-form-urlencoded'
     ]);
-
     $response = curl_exec($ch);
     curl_close($ch);
 
     $data = json_decode($response, true);
 
     if (isset($data['access_token'])) {
-        // Add expires_at timestamp
         $data['expires_at'] = time() + $data['expires_in'];
-
-        // Save tokens to Firestore
-        $saved = firestorePatchDocument($firebaseUrl, $firebaseApiKey, $docId, $data);
+        $saved = firestorePatchDocument($firebaseUrl, $firebaseApiKey, $data, $docId);
         if (!$saved) {
             echo "Warning: Failed to save tokens to Firestore.";
         } else {
             echo "Authorization successful! Tokens saved to Firestore.";
         }
-
         echo "<pre>" . print_r($data, true) . "</pre>";
     } else {
         echo "Error exchanging code: " . htmlspecialchars($response);
@@ -74,3 +70,4 @@ if (isset($_GET['code']) && !empty($_GET['code'])) {
 } else {
     echo "No authorization code received.";
 }
+?>

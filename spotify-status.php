@@ -6,10 +6,10 @@ $client_secret = '717778de811f483b9c6acd2712a24173';
 
 $firebaseUrl = "https://firestore.googleapis.com/v1/projects/charlespuraportfolio/databases/(default)/documents/spotifyTokens";
 $firebaseApiKey = "AIzaSyCWI8MnGPuFXFjBvV6eL1vuVDEUOaoUNXo";
-$docId = "spotify";  // Document ID for storing tokens
+$docId = "spotify";
 
-// Firestore helpers (as above)
-function firestoreGetDocument($firebaseUrl, $apiKey, $docId = "spotify") {
+// Firestore helpers
+function firestoreGetDocument($firebaseUrl, $apiKey, $docId) {
     $url = $firebaseUrl . "/" . $docId . "?key=" . $apiKey;
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -20,15 +20,15 @@ function firestoreGetDocument($firebaseUrl, $apiKey, $docId = "spotify") {
     return json_decode($response, true);
 }
 
-function firestorePatchDocument($firebaseUrl, $apiKey, $docId = "spotify", $data) {
+function firestorePatchDocument($firebaseUrl, $apiKey, $data, $docId) {
     $url = $firebaseUrl . "/" . $docId . "?key=" . $apiKey;
     $fields = [];
     foreach ($data as $key => $value) {
         if (is_int($value)) {
             $fields[$key] = ["integerValue" => strval($value)];
-        } else if (is_float($value)) {
+        } elseif (is_float($value)) {
             $fields[$key] = ["doubleValue" => $value];
-        } else if (is_string($value)) {
+        } elseif (is_string($value)) {
             $fields[$key] = ["stringValue" => $value];
         } else {
             $fields[$key] = ["stringValue" => json_encode($value)];
@@ -100,7 +100,7 @@ if (!isset($tokens['expires_at']) || time() > ($tokens['expires_at'] - 60)) {
             $tokens['refresh_token'] = $refresh_data['refresh_token'];
         }
         // Update Firestore with new tokens
-        firestorePatchDocument($firebaseUrl, $firebaseApiKey, $docId, $tokens);
+        firestorePatchDocument($firebaseUrl, $firebaseApiKey, $tokens, $docId);
     } else {
         http_response_code(500);
         echo json_encode(['error' => 'Failed to refresh token']);
@@ -114,7 +114,6 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
     'Authorization: Bearer ' . $tokens['access_token'],
 ]);
-
 $playback_response = curl_exec($ch);
 $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
@@ -152,3 +151,4 @@ echo json_encode([
     'album_art' => $album_art_url,
     'url' => $track_url
 ]);
+?>
