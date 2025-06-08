@@ -4,5 +4,5 @@
   "expires_in": 3600,
   "refresh_token": "...",
   "scope": "user-read-playback-state user-read-currently-playing",
-  "expires_at": 1686570000
+  "expires_at": 1754703900
 }
