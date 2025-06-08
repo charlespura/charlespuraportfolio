@@ -3,24 +3,42 @@
 
 <!-- Spotify Now Playing - Left middle corner -->
 <section id="hero" class="relative h-screen flex flex-col justify-center items-center pt-25 bg-[#f5f5f5] dark:bg-gray-800 transition-colors duration-500 px-6 md:px-12">
-<!-- Mobile square widget -->
+
+
+
+<!-- Mobile rectangular widget -->
 <a
   id="spotify-link-mobile"
   href="#"
   target="_blank"
-  class="absolute top-1/2 left-4 w-16 h-16 rounded-md overflow-hidden shadow-lg bg-white dark:bg-gray-700 flex items-center justify-center md:hidden transform -translate-y-1/2"
+  class="absolute top-1/2 left-4 w-24 h-56 rounded-md overflow-hidden shadow-lg bg-white dark:bg-gray-700 flex flex-col items-center justify-start md:hidden transform -translate-y-1/2 p-2"
 >
   <img
     id="spotify-album-art-mobile"
     src=""
     alt="Album Art"
-    class="w-full h-full object-cover hidden"
+    class="w-full h-24 object-cover mb-2 rounded"
   />
+  
+  <p id="spotify-track-mobile" class="text-xs font-bold text-center truncate w-full text-black dark:text-white">Loading...</p>
+  <p id="spotify-artist-mobile" class="text-xs text-center truncate w-full text-gray-700 dark:text-gray-300"></p>
+  
+  <!-- Mobile Progress Bar --><div class="relative w-full h-1 rounded-full overflow-hidden bg-gray-300 dark:bg-gray-700 mt-2">
+  <div
+    id="progress-bar-mobile"
+    class="absolute top-0 left-0 h-full bg-[#1DB954] transition-all duration-300"
+    style="width: 0%"
+  ></div>
+</div>
+
+
+  <p id="progress-time-mobile" class="text-[10px] text-center text-gray-700 dark:text-gray-300 mt-1"></p>
+
   <img
     id="spotify-logo-mobile"
     src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
     alt="Spotify Logo"
-    class="w-8 h-8"
+    class="w-6 h-6 mt-2"
   />
 </a>
 
@@ -29,26 +47,44 @@
   id="spotify-link"
   href="#"
   target="_blank"
-  class="absolute top-1/2 left-4 w-100 max-w-full rounded-xl overflow-hidden shadow-xl transform -translate-y-1/2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 hidden md:flex items-center space-x-4 text-gray-700 dark:text-gray-300"
+  class="absolute top-1/2 left-4 w-96 max-w-full rounded-xl overflow-hidden shadow-xl transform -translate-y-1/2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 hidden md:flex flex-col space-y-2 text-gray-700 dark:text-gray-300"
 >
-  <img
-    src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
-    alt="Spotify Logo"
-    class="w-8 h-8 flex-shrink-0"
-  />
-  <img
-    id="spotify-album-art"
-    src=""
-    alt="Album Art"
-    class="w-16 h-16 rounded-md hidden"
-  />
-  <div class="flex flex-col overflow-hidden">
-    <p id="spotify-track" class="font-bold truncate">Loading...</p>
-    <p id="spotify-artist" class="text-sm truncate"></p>
+  <!-- Progress Bar -->
+ <div class="relative w-full h-1 rounded-full overflow-hidden bg-gray-300 dark:bg-gray-700 mt-2">
+  <div
+    id="progress-bar"
+    class="absolute top-0 left-0 h-full bg-[#1DB954] transition-all duration-300"
+    style="width: 0%"
+  ></div>
+</div>
+
+  <!-- Time Display -->
+  <p id="progress-time" class="text-xs"></p>
+
+  <div class="flex items-center space-x-4">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"
+      alt="Spotify Logo"
+      class="w-8 h-8 flex-shrink-0"
+    />
+    <img
+      id="spotify-album-art"
+      src=""
+      alt="Album Art"
+      class="w-16 h-16 rounded-md hidden"
+    />
+    <div class="flex flex-col overflow-hidden">
+      <p id="spotify-track" class="font-bold truncate">Loading...</p>
+      <p id="spotify-artist" class="text-sm truncate"></p>
+    </div>
   </div>
 </a>
 
 <script>
+  let currentProgress = 0;
+  let duration = 0;
+  let isPlaying = false;
+
   async function fetchSpotifyStatus() {
     try {
       const response = await fetch('spotify-status.php');
@@ -59,9 +95,12 @@
       const albumArt = document.getElementById('spotify-album-art');
       const link = document.getElementById('spotify-link');
 
+      // Mobile elements
       const mobileLink = document.getElementById('spotify-link-mobile');
       const mobileAlbumArt = document.getElementById('spotify-album-art-mobile');
       const mobileLogo = document.getElementById('spotify-logo-mobile');
+      const mobileTrack = document.getElementById('spotify-track-mobile');
+      const mobileArtist = document.getElementById('spotify-artist-mobile');
 
       if (data.track && data.track !== 'Nothing playing right now') {
         // Desktop
@@ -74,7 +113,9 @@
         // Mobile
         mobileAlbumArt.src = data.album_art;
         mobileAlbumArt.classList.remove('hidden');
-        mobileLogo.classList.add('hidden');
+      //  mobileLogo.classList.add('hidden');
+        mobileTrack.textContent = data.track;
+        mobileArtist.textContent = data.artist;
         mobileLink.classList.remove('hidden');
 
         if (data.url) {
@@ -92,70 +133,95 @@
           mobileLink.removeAttribute('href');
           mobileLink.classList.add('pointer-events-none');
         }
+
+        // Save progress and duration for smooth animation
+        if (data.progress_ms && data.duration_ms) {
+          currentProgress = data.progress_ms;
+          duration = data.duration_ms;
+          isPlaying = true;
+        } else {
+          isPlaying = false;
+        }
       } else {
-        // Not listening: show "Not listening" message on desktop
+        // Not listening
         track.textContent = "Not listening";
         artist.textContent = "";
         albumArt.classList.add('hidden');
+        document.getElementById('progress-bar').style.width = `0%`;
+        document.getElementById('progress-time').textContent = '';
 
-        // Hide desktop if you prefer, or show minimal info
         link.classList.remove('pointer-events-none');
 
-        // Hide mobile widget
         mobileAlbumArt.classList.add('hidden');
         mobileLogo.classList.remove('hidden');
+        mobileTrack.textContent = '';
+        mobileArtist.textContent = '';
         mobileLink.classList.add('pointer-events-none');
+
+        isPlaying = false;
       }
     } catch (err) {
       console.error('Spotify status error:', err);
       document.getElementById('spotify-link').classList.add('hidden');
       document.getElementById('spotify-link-mobile').classList.add('hidden');
+      isPlaying = false;
     }
   }
+setInterval(() => {
+  if (isPlaying && duration > 0) {
+    currentProgress += 100; // 100ms increment
+    if (currentProgress > duration) {
+      currentProgress = duration;
+    }
 
+    const percent = (currentProgress / duration) * 100;
+
+    // Update desktop progress bar
+    document.getElementById('progress-bar').style.width = `${percent}%`;
+
+    // Update mobile progress bar
+    document.getElementById('progress-bar-mobile').style.width = `${percent}%`;
+
+    const formatTime = (ms) => {
+      const totalSeconds = Math.floor(ms / 1000);
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    };
+
+    const formattedTime = `${formatTime(currentProgress)} / ${formatTime(duration)}`;
+
+    // Update desktop time
+    document.getElementById('progress-time').textContent = formattedTime;
+
+    // Update mobile time
+    document.getElementById('progress-time-mobile').textContent = formattedTime;
+  }
+}, 100);
+
+
+  // Fetch data every 10 seconds
   fetchSpotifyStatus();
   setInterval(fetchSpotifyStatus, 10000);
 </script>
 
-
-
-<script>// Example JavaScript to update album art and toggle visibility
-function updateSpotifyWidget(track, artist, albumArtUrl, spotifyUrl) {
-  // Desktop
-  const desktopLink = document.getElementById('spotify-link');
-  const desktopAlbumArt = document.getElementById('spotify-album-art');
-  const desktopTrack = document.getElementById('spotify-track');
-  const desktopArtist = document.getElementById('spotify-artist');
-
-  // Mobile
-  const mobileLink = document.getElementById('spotify-link-mobile');
-  const mobileAlbumArt = document.getElementById('spotify-album-art-mobile');
-  const mobileLogo = document.getElementById('spotify-logo-mobile');
-
-  desktopLink.href = spotifyUrl;
-  mobileLink.href = spotifyUrl;
-
-  desktopTrack.textContent = track || "Unknown Track";
-  desktopArtist.textContent = artist || "";
-
-  if (albumArtUrl) {
-    desktopAlbumArt.src = albumArtUrl;
-    desktopAlbumArt.classList.remove('hidden');
-
-    mobileAlbumArt.src = albumArtUrl;
-    mobileAlbumArt.classList.remove('hidden');
-
-    mobileLogo.classList.add('hidden');
+<script>function toggleSpotifyViews() {
+  const mobile = document.getElementById('spotify-link-mobile');
+  const desktop = document.getElementById('spotify-link');
+  if (window.innerWidth < 768) {
+    // Mobile screen
+    mobile.style.display = 'flex';
+    desktop.style.display = 'none';
   } else {
-    desktopAlbumArt.classList.add('hidden');
-
-    mobileAlbumArt.classList.add('hidden');
-    mobileLogo.classList.remove('hidden');
+    // Desktop screen
+    mobile.style.display = 'none';
+    desktop.style.display = 'flex';
   }
 }
+
+window.addEventListener('resize', toggleSpotifyViews);
+window.addEventListener('load', toggleSpotifyViews);
 </script>
-
-
 
 
 
@@ -176,14 +242,9 @@ function updateSpotifyWidget(track, artist, albumArtUrl, spotifyUrl) {
     ></iframe>
   </div>
 
-
-
-
-
-
-
-
-  <h1 class="text-5xl font-bold mb-4 text-black dark:text-white text-center">WELCOME! I'M CHARLES PURA</h1>
+ <h1 class="text-3xl md:text-5xl font-bold mb-4 text-black dark:text-white text-center">
+  WELCOME! I'M CHARLES PURA
+</h1>
 
   <p class="text-lg mb-6 text-center max-w-2xl text-gray-800 dark:text-gray-300">
     Passionate about web-based systems, Android Studio applications, and more.
@@ -192,7 +253,8 @@ function updateSpotifyWidget(track, artist, albumArtUrl, spotifyUrl) {
 
   
   <!-- Robot instead of Image -->
-  <div class="mt-8 relative z-10"> <!-- Added relative and z-10 -->
+<div class="mt-8 relative z-10"> <!-- fades robot on mobile -->
+
     <div class="relative w-48 h-80 mx-auto">
       <!-- Head -->
       <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-blue-400 dark:bg-gray-600 rounded-2xl flex justify-center items-center shadow-md border-4 border-blue-700 dark:border-gray-500">
@@ -238,9 +300,6 @@ function updateSpotifyWidget(track, artist, albumArtUrl, spotifyUrl) {
       Download Resume
     </a>
   </div>
-
- 
-
 </section>
  <!-- Scroll Down Animation -->
   <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
@@ -248,6 +307,7 @@ function updateSpotifyWidget(track, artist, albumArtUrl, spotifyUrl) {
       <div class="w-2 h-2 bg-gray-700 dark:bg-gray-300 rounded-full animate-scroll-dot mt-1"></div>
     </div>
   </div>
+  
 <!-- CSS for eye follow effect -->
 <style>
     .eye {
@@ -354,3 +414,6 @@ function updateSpotifyWidget(track, artist, albumArtUrl, spotifyUrl) {
     animation: scrollDot 1.2s infinite ease-in-out;
   }
 </style>
+
+<script src="https://unpkg.com/color-thief-browser/dist/color-thief.umd.js"></script>
+

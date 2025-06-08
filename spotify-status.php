@@ -8,7 +8,6 @@ $firebaseUrl = "https://firestore.googleapis.com/v1/projects/charlespuraportfoli
 $firebaseApiKey = "AIzaSyCWI8MnGPuFXFjBvV6eL1vuVDEUOaoUNXo";
 $docId = "spotify";
 
-// Firestore helpers
 function firestoreGetDocument($firebaseUrl, $apiKey, $docId) {
     $url = $firebaseUrl . "/" . $docId . "?key=" . $apiKey;
     $ch = curl_init($url);
@@ -46,7 +45,6 @@ function firestorePatchDocument($firebaseUrl, $apiKey, $data, $docId) {
     return $httpCode === 200;
 }
 
-// Load tokens from Firestore
 $doc = firestoreGetDocument($firebaseUrl, $firebaseApiKey, $docId);
 if (!$doc || !isset($doc['fields'])) {
     http_response_code(500);
@@ -54,7 +52,6 @@ if (!$doc || !isset($doc['fields'])) {
     exit;
 }
 
-// Map Firestore fields to token array
 $tokens = [];
 foreach ($doc['fields'] as $key => $value) {
     if (isset($value['stringValue'])) {
@@ -64,12 +61,10 @@ foreach ($doc['fields'] as $key => $value) {
     }
 }
 
-// Convert expires_at to int if string
 if (isset($tokens['expires_at'])) {
     $tokens['expires_at'] = (int)$tokens['expires_at'];
 }
 
-// Function to refresh token
 function refreshAccessToken($client_id, $client_secret, $refresh_token) {
     $ch = curl_init('https://accounts.spotify.com/api/token');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -87,7 +82,6 @@ function refreshAccessToken($client_id, $client_secret, $refresh_token) {
     return json_decode($response, true);
 }
 
-// Check if token expired (with 60 second buffer)
 if (!isset($tokens['expires_at']) || time() > ($tokens['expires_at'] - 60)) {
     $refresh_data = refreshAccessToken($client_id, $client_secret, $tokens['refresh_token']);
     if (isset($refresh_data['access_token'])) {
@@ -99,7 +93,6 @@ if (!isset($tokens['expires_at']) || time() > ($tokens['expires_at'] - 60)) {
         if (isset($refresh_data['refresh_token'])) {
             $tokens['refresh_token'] = $refresh_data['refresh_token'];
         }
-        // Update Firestore with new tokens
         firestorePatchDocument($firebaseUrl, $firebaseApiKey, $tokens, $docId);
     } else {
         http_response_code(500);
@@ -108,25 +101,49 @@ if (!isset($tokens['expires_at']) || time() > ($tokens['expires_at'] - 60)) {
     }
 }
 
-// Use access token to get current playback
+// Try to get current playback
 $ch = curl_init('https://api.spotify.com/v1/me/player/currently-playing');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    'Authorization: Bearer ' . $tokens['access_token'],
-]);
+curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $tokens['access_token']]);
 $playback_response = curl_exec($ch);
 $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
-// Handle no content or not playing
 if ($http_code == 204 || $http_code == 404) {
-    echo json_encode([
-        'track' => 'Nothing playing right now',
-        'artist' => '',
-        'album_art' => '',
-        'url' => ''
-    ]);
-    exit;
+    // If not playing, get the last played track
+    $ch = curl_init('https://api.spotify.com/v1/me/player/recently-played?limit=1');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $tokens['access_token']]);
+    $recent_response = curl_exec($ch);
+    curl_close($ch);
+
+    $recent_data = json_decode($recent_response, true);
+    if (isset($recent_data['items'][0]['track'])) {
+        $item = $recent_data['items'][0]['track'];
+        $track_name = $item['name'] ?? 'Unknown Track';
+        $artist_name = $item['artists'][0]['name'] ?? 'Unknown Artist';
+        $album_art_url = $item['album']['images'][0]['url'] ?? '';
+        $track_url = $item['external_urls']['spotify'] ?? '';
+        echo json_encode([
+            'track' => $track_name . " (Last played)",
+            'artist' => $artist_name,
+            'album_art' => $album_art_url,
+            'url' => $track_url,
+            'progress_ms' => 0,
+            'duration_ms' => 0
+        ]);
+        exit;
+    } else {
+        echo json_encode([
+            'track' => 'Nothing playing right now',
+            'artist' => '',
+            'album_art' => '',
+            'url' => '',
+            'progress_ms' => 0,
+            'duration_ms' => 0
+        ]);
+        exit;
+    }
 }
 
 $data = json_decode($playback_response, true);
@@ -135,20 +152,27 @@ if (!$data || !isset($data['item'])) {
         'track' => 'Nothing playing right now',
         'artist' => '',
         'album_art' => '',
-        'url' => ''
+        'url' => '',
+        'progress_ms' => 0,
+        'duration_ms' => 0
     ]);
     exit;
 }
 
-$track_name = $data['item']['name'] ?? 'Unknown Track';
-$artist_name = $data['item']['artists'][0]['name'] ?? 'Unknown Artist';
-$album_art_url = $data['item']['album']['images'][0]['url'] ?? '';
-$track_url = $data['item']['external_urls']['spotify'] ?? '';
+$item = $data['item'];
+$track_name = $item['name'] ?? 'Unknown Track';
+$artist_name = $item['artists'][0]['name'] ?? 'Unknown Artist';
+$album_art_url = $item['album']['images'][0]['url'] ?? '';
+$track_url = $item['external_urls']['spotify'] ?? '';
+$progress_ms = $data['progress_ms'] ?? 0;
+$duration_ms = $item['duration_ms'] ?? 0;
 
 echo json_encode([
     'track' => $track_name,
     'artist' => $artist_name,
     'album_art' => $album_art_url,
-    'url' => $track_url
+    'url' => $track_url,
+    'progress_ms' => $progress_ms,
+    'duration_ms' => $duration_ms
 ]);
 ?>
