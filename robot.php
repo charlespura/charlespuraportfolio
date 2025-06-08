@@ -117,6 +117,8 @@
   setInterval(fetchSpotifyStatus, 10000);
 </script>
 
+
+
 <script>// Example JavaScript to update album art and toggle visibility
 function updateSpotifyWidget(track, artist, albumArtUrl, spotifyUrl) {
   // Desktop
