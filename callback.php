@@ -1,12 +1,37 @@
 <?php
-// callback.php
-
 $client_id = '47ca30ec497f4e0eb84dde015e6fa71e';
 $client_secret = '717778de811f483b9c6acd2712a24173';
 $redirect_uri = 'https://cpportfolio.onrender.com/callback.php';
 
-// Use /tmp directory to avoid permission errors
-$token_file = sys_get_temp_dir() . '/spotify_tokens.json';
+$firebaseUrl = "https://firestore.googleapis.com/v1/projects/charlespuraportfolio/databases/(default)/documents/spotifyTokens";
+$firebaseApiKey = "AIzaSyCWI8MnGPuFXFjBvV6eL1vuVDEUOaoUNXo";
+$docId = "spotify";  // Document ID for storing tokens
+
+function firestorePatchDocument($firebaseUrl, $apiKey, $docId = "spotify", $data) {
+    $url = $firebaseUrl . "/" . $docId . "?key=" . $apiKey;
+    $fields = [];
+    foreach ($data as $key => $value) {
+        if (is_int($value)) {
+            $fields[$key] = ["integerValue" => strval($value)];
+        } else if (is_float($value)) {
+            $fields[$key] = ["doubleValue" => $value];
+        } else if (is_string($value)) {
+            $fields[$key] = ["stringValue" => $value];
+        } else {
+            $fields[$key] = ["stringValue" => json_encode($value)];
+        }
+    }
+    $payload = ["fields" => $fields];
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    return $httpCode === 200;
+}
 
 if (isset($_GET['code']) && !empty($_GET['code'])) {
     $code = $_GET['code'];
@@ -31,15 +56,15 @@ if (isset($_GET['code']) && !empty($_GET['code'])) {
     $data = json_decode($response, true);
 
     if (isset($data['access_token'])) {
-        // Add expires_at timestamp (current time + expires_in seconds)
+        // Add expires_at timestamp
         $data['expires_at'] = time() + $data['expires_in'];
 
-        // Save tokens to /tmp directory
-        $saved = file_put_contents($token_file, json_encode($data, JSON_PRETTY_PRINT));
-        if ($saved === false) {
-            echo "Warning: Failed to save tokens to $token_file. Check file permissions.";
+        // Save tokens to Firestore
+        $saved = firestorePatchDocument($firebaseUrl, $firebaseApiKey, $docId, $data);
+        if (!$saved) {
+            echo "Warning: Failed to save tokens to Firestore.";
         } else {
-            echo "Authorization successful! Tokens saved to $token_file.";
+            echo "Authorization successful! Tokens saved to Firestore.";
         }
 
         echo "<pre>" . print_r($data, true) . "</pre>";
