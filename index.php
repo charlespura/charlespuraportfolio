@@ -194,43 +194,224 @@ html, body {
     chatInput.focus();
   });
 </script>
+<header class="w-full fixed top-0 left-0 z-50 transition-colors duration-500 px-4 py-3">
 
-  <!-- Navbar --><header class="w-full fixed top-0 left-0 z-50 backdrop-blur-md bg-white/80 dark:bg-black/80 transition-colors duration-500">
-  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-  <div class="flex items-center">
+  <div class="max-w-7xl mx-auto flex justify-between items-center space-x-4">
+
+ <!-- Glass morph box for logo + copy email / name -->
+<div
+  id="logo-box"
+  class="flex items-center justify-start p-2 rounded-xl bg-white/30 dark:bg-black/30 backdrop-blur-md border border-white/20 dark:border-black/20"
+  style="width: 100px;" 
+>
   <img src="pictures/cplogo.png" alt="Charles Pura Logo" class="h-12 md:h-10 sm:h-9" />
+
+  <button
+    id="copy-email-btn"
+    class="ml-3 text-sm text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap"
+    title="Copy email"
+  >
+    Copy
+    <br>
+    Email
+  </button>
+
+  <span
+    id="name-text"
+    class="ml-3 text-sm font-semibold text-gray-900 dark:text-gray-100 hidden select-none whitespace-nowrap"
+  >
+    Charles <br>Pura
+  </span>
 </div>
 
-    <nav class="hidden md:flex space-x-16 px-4 py-2 rounded-md">
+
+
+    <!-- Glass morph box for nav (hidden on mobile) -->
+    <nav
+      class="hidden md:flex space-x-12 px-6 py-3 rounded-xl bg-white/30 dark:bg-black/30 backdrop-blur-md border border-white/20 dark:border-black/20 max-w-xl mx-auto"
+    >
       <a href="#about" class="hover:text-blue-600 dark:hover:text-blue-400 transition">About</a>
       <a href="#skills" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Skills</a>
       <a href="#projects" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Projects</a>
       <a href="#contact" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Contact</a>
     </nav>
- 
-    <!-- Theme toggle & Hamburger -->
-    <div class="flex items-center space-x-4">
-  <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition relative">
-<!-- Sun Icon for light mode (but shown only in dark mode to *switch* back to light) -->
-<svg id="sun-icon" class="theme-icon w-6 h-6 hidden dark:inline" xmlns="http://www.w3.org/2000/svg"
-  fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-  <circle cx="12" cy="12" r="5" fill="yellow"></circle>
-  <path stroke="yellow" stroke-linecap="round" stroke-linejoin="round"
-    d="M12 1v2m0 18v2m9-11h-2M5 12H3m15.36-7.36l-1.42 1.42M6.06 17.94l-1.42 1.42m12.72 0l1.42-1.42M6.06 6.06L4.64 4.64" />
-</svg>
 
-  <!-- Moon Icon for dark mode (but shown only in light mode to *switch* to dark) -->
-  <svg id="moon-icon" class="theme-icon w-6 h-6 text-gray-800 dark:hidden" xmlns="http://www.w3.org/2000/svg"
-    fill="currentColor" viewBox="0 0 24 24">
-    <path
-      d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" />
-  </svg>
+    <!-- Glass morph box for theme toggle & hamburger -->
+    <div
+      class="flex items-center space-x-4 p-2 rounded-xl bg-white/30 dark:bg-black/30 backdrop-blur-md border border-white/20 dark:border-black/20"
+      style="min-width: 4rem;"
+    >
+      <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition relative">
+        <!-- Sun Icon (show only in dark mode) -->
+        <svg
+          id="sun-icon"
+          class="theme-icon w-6 h-6 hidden dark:inline"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="12" cy="12" r="5" fill="yellow"></circle>
+          <path
+            stroke="yellow"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 1v2m0 18v2m9-11h-2M5 12H3m15.36-7.36l-1.42 1.42M6.06 17.94l-1.42 1.42m12.72 0l1.42-1.42M6.06 6.06L4.64 4.64"
+          />
+        </svg>
 
-  <span id="theme-tooltip"
-    class="absolute top-1/2 left-full ml-2 transform -translate-y-1/2 px-2 py-1 text-xs rounded bg-gray-800 text-white opacity-0 pointer-events-none transition-opacity whitespace-nowrap">
-    Dark Theme
-  </span>
-</button>
+        <!-- Moon Icon (show only in light mode) -->
+        <svg
+          id="moon-icon"
+          class="theme-icon w-6 h-6 text-gray-800 dark:hidden"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" />
+        </svg>
+
+        <span
+          id="theme-tooltip"
+          class="absolute top-1/2 left-full ml-2 transform -translate-y-1/2 px-2 py-1 text-xs rounded bg-gray-800 text-white opacity-0 pointer-events-none transition-opacity whitespace-nowrap"
+        >
+          Dark Theme
+        </span>
+      </button>
+
+      <button
+        id="hamburger"
+        class="md:hidden p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 ease-in-out group"
+      >
+        <svg
+          class="w-6 h-6 text-black dark:text-white transform transition-transform duration-300 group-hover:rotate-90"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Nav -->
+  <nav
+    id="mobile-menu"
+    class="hidden md:hidden flex-col space-y-4 bg-white/90 dark:bg-black/90 backdrop-blur p-4 rounded-md mx-4 mt-2 text-sm transform transition-all duration-300 ease-in-out"
+  
+  >
+    <a href="#about" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">About</a>
+    <a href="#skills" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Skills</a>
+    <a href="#projects" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Projects</a>
+    <a href="#contact" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Contact</a>
+  </nav>
+  <style>@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.3s ease-out;
+}
+</style>
+  <!-- JS Script -->
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const navLinks = document.querySelectorAll('nav a');
+
+hamburger.addEventListener('click', () => {
+  const isHidden = mobileMenu.classList.contains('hidden');
+  mobileMenu.classList.toggle('hidden');
+
+  const svg = hamburger.querySelector('svg');
+  if (isHidden) {
+    // When opening the menu, add the animation class
+    mobileMenu.classList.add('animate-slideDown');
+
+    // Remove animation class after it completes (to re-trigger next time)
+    setTimeout(() => {
+      mobileMenu.classList.remove('animate-slideDown');
+    }, 300);
+
+    // Change to close icon
+    svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />';
+  } else {
+    // Change to hamburger icon
+    svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />';
+  }
+
+  // Add scale animation for dynamic effect
+  svg.classList.add('scale-110');
+  setTimeout(() => {
+    svg.classList.remove('scale-110');
+  }, 200);
+});
+
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.forEach(nav => {
+        nav.classList.remove('text-blue-600', 'dark:text-blue-400');
+      });
+      link.classList.add('text-blue-600', 'dark:text-blue-400');
+
+      if (!mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+        // Reset hamburger icon when closing mobile menu
+        const svg = hamburger.querySelector('svg');
+        svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />';
+      }
+    });
+  });
+</script>
+</header>
+
+<script>
+  const copyBtn = document.getElementById("copy-email-btn");
+  const nameText = document.getElementById("name-text");
+
+  let lastScrollY = window.scrollY;
+
+  // Copy email to clipboard
+  copyBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText("Charles051902pura@gmail.com")
+      .then(() => {
+        copyBtn.textContent = "Copied!";
+        setTimeout(() => copyBtn.innerHTML = "Copy <br>Email", 1500);  })
+      .catch(() => {
+        alert("Failed to copy email");
+      });
+  });
+
+  // Toggle name/copy email based on scroll
+  window.addEventListener("scroll", () => {
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY > lastScrollY && currentScrollY > 50) {
+      // Scrolling down past 50px: show name
+      copyBtn.classList.add("hidden");
+      nameText.classList.remove("hidden");
+    } else {
+      // Scrolling up or near top: show copy email
+      copyBtn.classList.remove("hidden");
+      nameText.classList.add("hidden");
+    }
+
+    lastScrollY = currentScrollY;
+  });
+</script>
+
+
 
 <style>
   #theme-toggle:hover #theme-tooltip {
@@ -332,69 +513,6 @@ html, body {
   }
 
   updateTooltipAndPreview();
-</script>
-
-
-
-   <button id="hamburger" 
-        class="md:hidden p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 ease-in-out group">
-  <svg class="w-6 h-6 text-black dark:text-white transform transition-transform duration-300 group-hover:rotate-90" 
-       xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-          d="M4 6h16M4 12h16M4 18h16" />
-  </svg>
-</button>
-
-    </div>
-  </div>
-
-    <!-- Mobile Nav -->
-    <nav id="mobile-menu" class="hidden md:hidden flex-col space-y-4 bg-white/90 dark:bg-black/90 backdrop-blur p-4 rounded-md mx-4 mt-2 text-sm">
-      <a href="#about" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">About</a>
-      <a href="#skills" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Skills</a>
-      <a href="#projects" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Projects</a>
-      <a href="#contact" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Contact</a>
-    </nav>
-</header>
-
-<!-- JS Script -->
-<script>
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const navLinks = document.querySelectorAll('nav a');
-
-  hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-    const svg = hamburger.querySelector('svg');
-    if (mobileMenu.classList.contains('hidden')) {
-      // Show hamburger icon
-      svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />';
-    } else {
-      // Show close (X) icon
-      svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />';
-    }
-    // Add a quick scale animation for a more dynamic effect
-    svg.classList.add('scale-110');
-    setTimeout(() => {
-      svg.classList.remove('scale-110');
-    }, 200);
-  });
-
-  navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.forEach(nav => {
-        nav.classList.remove('text-blue-600', 'dark:text-blue-400');
-      });
-      link.classList.add('text-blue-600', 'dark:text-blue-400');
-
-      if (!mobileMenu.classList.contains('hidden')) {
-        mobileMenu.classList.add('hidden');
-        // Reset hamburger icon when closing mobile menu
-        const svg = hamburger.querySelector('svg');
-        svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />';
-      }
-    });
-  });
 </script>
 
 <?php

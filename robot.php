@@ -41,7 +41,6 @@
     class="w-6 h-6 mt-2"
   />
 </a>
-
 <!-- Desktop widget as a more defined box -->
 <a
   id="spotify-link"
@@ -49,14 +48,15 @@
   target="_blank"
   class="absolute top-1/2 left-4 w-96 max-w-full rounded-xl overflow-hidden shadow-xl transform -translate-y-1/2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 p-4 hidden md:flex flex-col space-y-2 text-gray-700 dark:text-gray-300"
 >
+Developer Listening to Spotify
   <!-- Progress Bar -->
- <div class="relative w-full h-1 rounded-full overflow-hidden bg-gray-300 dark:bg-gray-700 mt-2">
-  <div
-    id="progress-bar"
-    class="absolute top-0 left-0 h-full bg-[#1DB954] transition-all duration-300"
-    style="width: 0%"
-  ></div>
-</div>
+  <div class="relative w-full h-1 rounded-full overflow-hidden bg-gray-300 dark:bg-gray-700 mt-2">
+    <div
+      id="progress-bar"
+      class="absolute top-0 left-0 h-full bg-[#1DB954] transition-all duration-300"
+      style="width: 0%"
+    ></div>
+  </div>
 
   <!-- Time Display -->
   <p id="progress-time" class="text-xs"></p>
@@ -113,7 +113,7 @@
         // Mobile
         mobileAlbumArt.src = data.album_art;
         mobileAlbumArt.classList.remove('hidden');
-      //  mobileLogo.classList.add('hidden');
+        // mobileLogo.classList.add('hidden');
         mobileTrack.textContent = data.track;
         mobileArtist.textContent = data.artist;
         mobileLink.classList.remove('hidden');
@@ -150,13 +150,17 @@
         document.getElementById('progress-bar').style.width = `0%`;
         document.getElementById('progress-time').textContent = '';
 
-        link.classList.remove('pointer-events-none');
+        // Make both desktop and mobile links unclickable when not playing
+        link.removeAttribute('href');
+        link.classList.add('pointer-events-none');
+
+        mobileLink.removeAttribute('href');
+        mobileLink.classList.add('pointer-events-none');
 
         mobileAlbumArt.classList.add('hidden');
         mobileLogo.classList.remove('hidden');
         mobileTrack.textContent = '';
         mobileArtist.textContent = '';
-        mobileLink.classList.add('pointer-events-none');
 
         isPlaying = false;
       }
@@ -167,61 +171,63 @@
       isPlaying = false;
     }
   }
-setInterval(() => {
-  if (isPlaying && duration > 0) {
-    currentProgress += 100; // 100ms increment
-    if (currentProgress > duration) {
-      currentProgress = duration;
+
+  setInterval(() => {
+    if (isPlaying && duration > 0) {
+      currentProgress += 100; // 100ms increment
+      if (currentProgress > duration) {
+        currentProgress = duration;
+      }
+
+      const percent = (currentProgress / duration) * 100;
+
+      // Update desktop progress bar
+      document.getElementById('progress-bar').style.width = `${percent}%`;
+
+      // Update mobile progress bar
+      document.getElementById('progress-bar-mobile').style.width = `${percent}%`;
+
+      const formatTime = (ms) => {
+        const totalSeconds = Math.floor(ms / 1000);
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      };
+
+      const formattedTime = `${formatTime(currentProgress)} / ${formatTime(duration)}`;
+
+      // Update desktop time
+      document.getElementById('progress-time').textContent = formattedTime;
+
+      // Update mobile time
+      document.getElementById('progress-time-mobile').textContent = formattedTime;
     }
-
-    const percent = (currentProgress / duration) * 100;
-
-    // Update desktop progress bar
-    document.getElementById('progress-bar').style.width = `${percent}%`;
-
-    // Update mobile progress bar
-    document.getElementById('progress-bar-mobile').style.width = `${percent}%`;
-
-    const formatTime = (ms) => {
-      const totalSeconds = Math.floor(ms / 1000);
-      const minutes = Math.floor(totalSeconds / 60);
-      const seconds = totalSeconds % 60;
-      return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-    };
-
-    const formattedTime = `${formatTime(currentProgress)} / ${formatTime(duration)}`;
-
-    // Update desktop time
-    document.getElementById('progress-time').textContent = formattedTime;
-
-    // Update mobile time
-    document.getElementById('progress-time-mobile').textContent = formattedTime;
-  }
-}, 100);
-
+  }, 100);
 
   // Fetch data every 10 seconds
   fetchSpotifyStatus();
   setInterval(fetchSpotifyStatus, 10000);
 </script>
 
-<script>function toggleSpotifyViews() {
-  const mobile = document.getElementById('spotify-link-mobile');
-  const desktop = document.getElementById('spotify-link');
-  if (window.innerWidth < 768) {
-    // Mobile screen
-    mobile.style.display = 'flex';
-    desktop.style.display = 'none';
-  } else {
-    // Desktop screen
-    mobile.style.display = 'none';
-    desktop.style.display = 'flex';
+<script>
+  function toggleSpotifyViews() {
+    const mobile = document.getElementById('spotify-link-mobile');
+    const desktop = document.getElementById('spotify-link');
+    if (window.innerWidth < 768) {
+      // Mobile screen
+      mobile.style.display = 'flex';
+      desktop.style.display = 'none';
+    } else {
+      // Desktop screen
+      mobile.style.display = 'none';
+      desktop.style.display = 'flex';
+    }
   }
-}
 
-window.addEventListener('resize', toggleSpotifyViews);
-window.addEventListener('load', toggleSpotifyViews);
+  window.addEventListener('resize', toggleSpotifyViews);
+  window.addEventListener('load', toggleSpotifyViews);
 </script>
+
 
 
 
@@ -248,49 +254,63 @@ window.addEventListener('load', toggleSpotifyViews);
 
   <p class="text-lg mb-6 text-center max-w-2xl text-gray-800 dark:text-gray-300">
     Passionate about web-based systems, Android Studio applications, and more.
-  </p>
-
-
-  
   <!-- Robot instead of Image -->
-<div class="mt-8 relative z-10"> <!-- fades robot on mobile -->
+  <div class="mt-8 relative z-10"> <!-- fades robot on mobile -->
 
     <div class="relative w-48 h-80 mx-auto">
       <!-- Head -->
       <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-blue-400 dark:bg-gray-600 rounded-2xl flex justify-center items-center shadow-md border-4 border-blue-700 dark:border-gray-500">
-        <!-- Eyes -->
-        <div class="flex space-x-6">
-          <div class="w-4 h-4 bg-black dark:bg-white rounded-full eye"></div>
-          <div class="w-4 h-4 bg-black dark:bg-white rounded-full eye"></div>
-        </div>
-        <!-- Antenna -->
-        <div class="absolute -top-6 w-2 h-6 bg-red-500 mx-auto rounded-full"></div>
+      <!-- Eyes -->
+      <div class="flex space-x-6">
+        <div class="w-4 h-4 bg-black dark:bg-white rounded-full eye"></div>
+        <div class="w-4 h-4 bg-black dark:bg-white rounded-full eye"></div>
+      </div>
+      <!-- Antenna -->
+      <div class="absolute -top-6 w-2 h-6 bg-red-500 mx-auto rounded-full"></div>
       </div>
 
       <!-- Body -->
       <div class="absolute top-28 left-1/2 transform -translate-x-1/2 w-36 h-40 bg-blue-500 dark:bg-gray-700 rounded-2xl shadow-lg border-4 border-blue-700 dark:border-gray-500">
-        <!-- Buttons -->
-        <div class="flex flex-col items-center justify-center h-full space-y-2">
-          <div class="w-4 h-4 bg-yellow-400 rounded-full"></div>
-          <div class="w-4 h-4 bg-red-400 rounded-full"></div>
-          <div class="w-4 h-4 bg-green-400 rounded-full"></div>
-        </div>
+      <!-- Buttons -->
+      <div class="flex flex-col items-center justify-center h-full space-y-2 z-20">
+     <p class="text-sm font-semibold text-gray-800 dark:text-gray-200 tracking-wide">Connect with Me</p>
+
+        <!-- Facebook -->
+        <a href="https://web.facebook.com/charlespuracp" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="pointer-events-auto text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 transition">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M22 12a10 10 0 10-11.5 9.87v-6.98H8v-2.9h2.5V9.4c0-2.48 1.49-3.86 3.77-3.86 1.09 0 2.23.2 2.23.2v2.46h-1.25c-1.23 0-1.62.77-1.62 1.56v1.87h2.77l-.44 2.9h-2.33v6.98A10 10 0 0022 12z"/>
+        </svg>
+        </a>
+
+        <!-- GitHub -->
+        <a href="https://github.com/charlespura" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="pointer-events-auto text-gray-800 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.166 6.84 9.49.5.09.68-.217.68-.483 0-.237-.008-.868-.013-1.703-2.78.603-3.37-1.342-3.37-1.342-.454-1.15-1.11-1.457-1.11-1.457-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.528 2.34 1.087 2.91.832.09-.647.35-1.088.636-1.34-2.22-.252-4.555-1.112-4.555-4.945 0-1.092.39-1.984 1.03-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.338 1.91-1.296 2.75-1.026 2.75-1.026.546 1.377.202 2.394.1 2.647.64.7 1.028 1.59 1.028 2.683 0 3.842-2.337 4.688-4.566 4.937.36.31.68.92.68 1.85 0 1.335-.012 2.414-.012 2.74 0 .268.18.58.69.48A10.007 10.007 0 0022 12c0-5.52-4.48-10-10-10z"/>
+        </svg>
+        </a>
+
+        <!-- Email -->
+        <a href="mailto:charles051902pura@gmail.com" aria-label="Email" class="pointer-events-auto text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-600 transition">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M20 4H4c-1.1 0-2 .9-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        </a>
+      </div>
       </div>
 
       <!-- Arms -->
-      <div class="absolute top-32 w-full flex justify-between">
-        <div class="w-4 h-24 bg-blue-500 dark:bg-gray-600 rounded-full"></div>
-        <div class="w-4 h-24 bg-blue-500 dark:bg-gray-600 rounded-full"></div>
+      <div class="absolute top-32 w-full flex justify-between pointer-events-none">
+      <div class="w-4 h-24 bg-blue-500 dark:bg-gray-600 rounded-full"></div>
+      <div class="w-4 h-24 bg-blue-500 dark:bg-gray-600 rounded-full"></div>
       </div>
 
       <!-- Legs -->
-      <div class="absolute top-72 w-full flex justify-center space-x-6">
-        <div class="w-4 h-12 bg-blue-500 dark:bg-gray-600 rounded-full"></div>
-        <div class="w-4 h-12 bg-blue-500 dark:bg-gray-600 rounded-full"></div>
+      <div class="absolute top-72 w-full flex justify-center space-x-6 pointer-events-none">
+      <div class="w-4 h-12 bg-blue-500 dark:bg-gray-600 rounded-full"></div>
+      <div class="w-4 h-12 bg-blue-500 dark:bg-gray-600 rounded-full"></div>
       </div>
     </div>
-  </div>
-
+    </div>
    <div id="cv-button-wrapper" class="transition-transform duration-300 ease-in-out">
     <a href="Charles Pura CV 2025.pdf" download 
        class="inline-flex items-center bg-gradient-to-r from-blue-600 to-blue-800 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:from-blue-700 hover:to-blue-900 transition duration-300">
