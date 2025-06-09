@@ -19,7 +19,7 @@
     alt="Album Art"
     class="w-full h-24 object-cover mb-2 rounded"
   />
-  <small>Developer Listening to Spotify</small>
+  Developer Listening to Spotify
   <p id="spotify-track-mobile" class="text-xs font-bold text-center truncate w-full text-black dark:text-white">Loading...</p>
   <p id="spotify-artist-mobile" class="text-xs text-center truncate w-full text-gray-700 dark:text-gray-300"></p>
   
@@ -40,10 +40,7 @@
     alt="Spotify Logo"
     class="w-6 h-6 mt-2"
   />
-    <div class="flex flex-col overflow-hidden">
-        <p id="spotify-track" class="text-xs font-bold truncate">Loading...</p>
-        <p id="spotify-artist" class="text-xs truncate"></p>
-    </div>
+  
 </a>
 
 <!-- Desktop widget as a more defined box -->
