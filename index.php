@@ -72,7 +72,6 @@ html, body {
 </head>
 
 <body class="bg-white text-black transition-colors duration-300 dark:bg-black dark:text-white">
-
 <!-- Include Tailwind CSS CDN in your <head> if not already -->
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet" />
 
@@ -91,17 +90,18 @@ html, body {
     </svg>
   </button>
 
-  <!-- Chat window, hidden by default -->
+
+  <!-- Chat window with animation -->
   <div id="chat-window" 
-       class="hidden w-80 bg-white dark:bg-gray-900 rounded-lg shadow-xl border border-gray-300 dark:border-gray-700 flex flex-col"
+       class="opacity-0 translate-y-4 scale-95 pointer-events-none transition-all duration-300 ease-in-out w-80 bg-white dark:bg-gray-900 rounded-lg shadow-xl border border-gray-300 dark:border-gray-700 flex flex-col"
        style="height: 400px;">
 
     <!-- Header -->
     <div class="bg-blue-600 text-white px-4 py-2 rounded-t-lg flex justify-between items-center">
-      <h2 class="font-semibold">Chat with Gemini</h2>
+      <h2 class="font-semibold">Chatbot Create By CharlesPura</h2>
       <button id="chat-close" aria-label="Close Chat" class="text-white hover:text-gray-200">&times;</button>
     </div>
- 
+
     <!-- Chat messages container -->
     <div id="chat-messages" 
          class="flex-1 overflow-y-auto p-4 space-y-3 text-gray-800 dark:text-gray-200"
@@ -124,47 +124,50 @@ html, body {
   const chatInput = document.getElementById('chat-input');
   const chatMessages = document.getElementById('chat-messages');
 
-  // Toggle chat window visibility
+  function openChat() {
+    chatWindow.classList.remove('opacity-0', 'translate-y-4', 'scale-95', 'pointer-events-none');
+    chatWindow.classList.add('opacity-100', 'translate-y-0', 'scale-100');
+    setTimeout(() => chatInput.focus(), 300);
+  }
+
+  function closeChat() {
+    chatWindow.classList.remove('opacity-100', 'translate-y-0', 'scale-100');
+    chatWindow.classList.add('opacity-0', 'translate-y-4', 'scale-95', 'pointer-events-none');
+  }
+
   toggleBtn.addEventListener('click', () => {
-    chatWindow.classList.toggle('hidden');
-    if (!chatWindow.classList.contains('hidden')) {
-      chatInput.focus();
+    if (chatWindow.classList.contains('opacity-0')) {
+      openChat();
+    } else {
+      closeChat();
     }
   });
 
-  chatCloseBtn.addEventListener('click', () => {
-    chatWindow.classList.add('hidden');
-  });
+  chatCloseBtn.addEventListener('click', closeChat);
 
-  // Append message to chat with dark mode colors
   function appendMessage(sender, text) {
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('rounded-lg', 'p-2', 'max-w-[75%]', 'break-words');
 
-    if(sender === 'user'){
-      // User bubble: light blue in light mode, darker blue in dark mode
+    if (sender === 'user') {
       messageDiv.classList.add(
         'self-end', 'text-right', 
         'bg-blue-100', 'dark:bg-blue-800', 'dark:text-blue-100'
       );
-      messageDiv.textContent = text;
     } else {
-      // Bot bubble: light gray in light mode, dark gray in dark mode
       messageDiv.classList.add(
         'self-start', 'text-left', 
         'bg-gray-100', 'dark:bg-gray-700', 'dark:text-gray-200'
       );
-      messageDiv.textContent = text;
     }
 
+    messageDiv.textContent = text;
     chatMessages.appendChild(messageDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 
-  // Handle form submission to send message
   chatForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-
     const message = chatInput.value.trim();
     if (!message) return;
 
@@ -175,13 +178,12 @@ html, body {
     try {
       const res = await fetch('chatbot.php', {
         method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: new URLSearchParams({message})
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ message })
       });
 
       const data = await res.json();
-
-      if(data.reply){
+      if (data.reply) {
         appendMessage('bot', data.reply);
       } else {
         appendMessage('bot', 'Error: ' + (data.error || 'Unknown error'));
@@ -194,6 +196,8 @@ html, body {
     chatInput.focus();
   });
 </script>
+
+
 <header class="w-full fixed top-0 left-0 z-50 transition-colors duration-500 px-4 py-3">
 
   <div class="max-w-7xl mx-auto flex justify-between items-center space-x-4">
@@ -544,7 +548,10 @@ include("robot.php");
       <!-- Liquid blob background -->
       <div class="absolute -top-6 -right-6 w-56 h-56 sm:w-72 sm:h-72 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 opacity-70 blur-3xl animate-blob z-0"></div>
       <!-- Profile image -->
-      <img src="profile.jpg" alt="Profile Picture" id="profile-picture" class="relative z-10 w-24 h-24 sm:w-48 sm:h-48 rounded-full object-cover shadow-2xl border-4 border-white dark:border-gray-800 transition-transform duration-500 ease-in-out">
+    <img src="pictures/charlespura.png" alt="Profile Picture" 
+     id="profile-picture" 
+     class="relative z-10 w-32 h-32 sm:w-56 sm:h-56 rounded-full object-cover object-top shadow-2xl border-4 border-white dark:border-gray-800 transition-transform duration-500 ease-in-out">
+
     </div>
   </div> 
 <style>@keyframes fadeInUp {

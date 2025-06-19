@@ -249,11 +249,53 @@ Developer Listening to Spotify
       title="Quezon City Map"
     ></iframe>
   </div>
+ <style>
+    .scramble-text {
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+  </style>
+<h1 id="scramble" class="text-3xl md:text-5xl font-bold text-center scramble-text"></h1>
 
- <h1 class="text-3xl md:text-5xl font-bold mb-4 text-black dark:text-white text-center">
-  WELCOME! I'M CHARLES PURA
-</h1>
+  <script>
+    const element = document.getElementById('scramble');
+    const fullText = "WELCOME! I'M CHARLES PURA";
+    const splitIndex = fullText.indexOf("CHARLES PURA");
+    const chars = "!@#$%^&*()_+-=[]{}|;:',.<>?/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    let frame = 0;
 
+    function scrambleText(text, iterations = 40, delay = 40) {
+      const length = text.length;
+      const original = text.split("");
+      const output = new Array(length).fill("");
+
+      const interval = setInterval(() => {
+        for (let i = 0; i < length; i++) {
+          if (frame > iterations / length * i) {
+            output[i] = original[i];
+          } else {
+            output[i] = chars[Math.floor(Math.random() * chars.length)];
+          }
+        }
+
+        const firstPart = output.slice(0, splitIndex).join("");
+        const secondPart = output.slice(splitIndex).join("");
+
+        element.innerHTML = `${firstPart}<span class="ml-2 text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap">${secondPart}</span>`;
+
+        frame++;
+
+        if (frame > iterations) {
+          clearInterval(interval);
+          element.innerHTML = `WELCOME! I'M <span class="ml-2 text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap">CHARLES PURA</span>`;
+        }
+      }, delay);
+    }
+
+    setTimeout(() => {
+      scrambleText(fullText, 40, 40);
+    }, 500);
+  </script>
   <p class="text-lg mb-6 text-center max-w-2xl text-gray-800 dark:text-gray-300">
     Passionate about web-based systems, Android Studio applications, and more.
   <!-- Robot instead of Image -->
@@ -313,6 +355,7 @@ Developer Listening to Spotify
       </div>
     </div>
     </div>
+    
    <div id="cv-button-wrapper" class="transition-transform duration-300 ease-in-out">
     <a href="Charles Pura CV 2025.pdf" download 
        class="inline-flex items-center bg-gradient-to-r from-blue-600 to-blue-800 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:from-blue-700 hover:to-blue-900 transition duration-300">
