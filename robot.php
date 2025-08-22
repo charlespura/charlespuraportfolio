@@ -249,53 +249,57 @@ Developer Listening to Spotify
       title="Quezon City Map"
     ></iframe>
   </div>
- <style>
-    .scramble-text {
-      font-family: monospace;
-      white-space: pre-wrap;
-    }
-  </style>
-<h1 id="scramble" class="text-3xl md:text-5xl font-bold text-center scramble-text"></h1>
 
-  <script>
-    const element = document.getElementById('scramble');
-    const fullText = "WELCOME! I'M CHARLES PURA";
-    const splitIndex = fullText.indexOf("CHARLES PURA");
-    const chars = "!@#$%^&*()_+-=[]{}|;:',.<>?/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    let frame = 0;
+  <style>
+  .scramble-text {
+    font-family: monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
 
-    function scrambleText(text, iterations = 40, delay = 40) {
-      const length = text.length;
-      const original = text.split("");
-      const output = new Array(length).fill("");
+<h1 id="scramble" class="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-bold text-center scramble-text px-2"></h1>
 
-      const interval = setInterval(() => {
-        for (let i = 0; i < length; i++) {
-          if (frame > iterations / length * i) {
-            output[i] = original[i];
-          } else {
-            output[i] = chars[Math.floor(Math.random() * chars.length)];
-          }
+<script>
+  const element = document.getElementById('scramble');
+  const fullText = "WELCOME! I'M CHARLES PURA";
+  const splitIndex = fullText.indexOf("CHARLES PURA");
+  const chars = "!@#$%^&*()_+-=[]{}|;:',.<>?/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  let frame = 0;
+
+  function scrambleText(text, iterations = 55, delay = 55) {
+    const length = text.length;
+    const original = text.split("");
+    const output = new Array(length).fill("");
+
+    const interval = setInterval(() => {
+      for (let i = 0; i < length; i++) {
+        if (frame > iterations / length * i) {
+          output[i] = original[i];
+        } else {
+          output[i] = chars[Math.floor(Math.random() * chars.length)];
         }
+      }
 
-        const firstPart = output.slice(0, splitIndex).join("");
-        const secondPart = output.slice(splitIndex).join("");
+      const firstPart = output.slice(0, splitIndex).join("");
+      const secondPart = output.slice(splitIndex).join("");
 
-        element.innerHTML = `${firstPart}<span class="ml-2 text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap">${secondPart}</span>`;
+      element.innerHTML = `${firstPart}<span class="ml-1 text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap">${secondPart}</span>`;
 
-        frame++;
+      frame++;
 
-        if (frame > iterations) {
-          clearInterval(interval);
-          element.innerHTML = `WELCOME! I'M <span class="ml-2 text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap">CHARLES PURA</span>`;
-        }
-      }, delay);
-    }
+      if (frame > iterations) {
+        clearInterval(interval);
+        element.innerHTML = `WELCOME! I'M <span class="ml-1 text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap">CHARLES PURA</span>`;
+      }
+    }, delay);
+  }
 
-    setTimeout(() => {
-      scrambleText(fullText, 40, 40);
-    }, 500);
-  </script>
+  setTimeout(() => {
+    scrambleText(fullText, 55, 55);
+  }, 500);
+</script>
+
   <p class="text-lg mb-6 text-center max-w-2xl text-gray-800 dark:text-gray-300">
     Passionate about web-based systems, Android Studio applications, and more.
   <!-- Robot instead of Image -->

@@ -75,46 +75,9 @@ html, body {
 <!-- Include Tailwind CSS CDN in your <head> if not already -->
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet" />
 
-<!-- Chatbot Widget -->
-<div id="chatbot-container" class="fixed bottom-6 right-6 z-50 flex flex-col items-end space-y-2">
-
-  <!-- Chat icon button -->
-  <button id="chatbot-toggle" 
-          class="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg focus:outline-none"
-          aria-label="Toggle Chatbot">
-    <!-- Chat icon SVG -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" 
-         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round" 
-            d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4-.86L3 20l1.86-4A8.972 8.972 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-    </svg>
-  </button>
 
 
-  <!-- Chat window with animation -->
-  <div id="chat-window" 
-       class="opacity-0 translate-y-4 scale-95 pointer-events-none transition-all duration-300 ease-in-out w-80 bg-white dark:bg-gray-900 rounded-lg shadow-xl border border-gray-300 dark:border-gray-700 flex flex-col"
-       style="height: 400px;">
 
-    <!-- Header -->
-    <div class="bg-blue-600 text-white px-4 py-2 rounded-t-lg flex justify-between items-center">
-      <h2 class="font-semibold">Chatbot Create By CharlesPura</h2>
-      <button id="chat-close" aria-label="Close Chat" class="text-white hover:text-gray-200">&times;</button>
-    </div>
-
-    <!-- Chat messages container -->
-    <div id="chat-messages" 
-         class="flex-1 overflow-y-auto p-4 space-y-3 text-gray-800 dark:text-gray-200"
-         style="scroll-behavior: smooth;"></div>
-
-    <!-- Input area -->
-    <form id="chat-form" class="flex border-t border-gray-300 dark:border-gray-700">
-      <input type="text" id="chat-input" placeholder="Ask me something..." required
-             class="flex-grow px-3 py-2 focus:outline-none bg-gray-100 dark:bg-gray-800 text-black dark:text-white" />
-      <button type="submit" class="bg-blue-600 text-white px-4 hover:bg-blue-700 transition">Send</button>
-    </form>
-  </div>
-</div>
 
 <script>
   const toggleBtn = document.getElementById('chatbot-toggle');
@@ -206,7 +169,8 @@ html, body {
 <div
   id="logo-box"
   class="flex items-center justify-start p-2 rounded-xl bg-white/30 dark:bg-black/30 backdrop-blur-md border border-white/20 dark:border-black/20"
-  style="width: 100px;" 
+  style="width: 100px; height: 65px;" 
+
 >
   <img src="pictures/cplogo.png" alt="Charles Pura Logo" class="h-12 md:h-10 sm:h-9" />
 
@@ -224,7 +188,12 @@ html, body {
     id="name-text"
     class="ml-3 text-sm font-semibold text-gray-900 dark:text-gray-100 hidden select-none whitespace-nowrap"
   >
-    Charles <br>Pura
+     <!-- Facebook -->
+        <a href="https://web.facebook.com/charlespuracp" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="pointer-events-auto text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 transition">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M22 12a10 10 0 10-11.5 9.87v-6.98H8v-2.9h2.5V9.4c0-2.48 1.49-3.86 3.77-3.86 1.09 0 2.23.2 2.23.2v2.46h-1.25c-1.23 0-1.62.77-1.62 1.56v1.87h2.77l-.44 2.9h-2.33v6.98A10 10 0 0022 12z"/>
+        </svg>
+        </a>
   </span>
 </div>
 
@@ -243,7 +212,7 @@ html, body {
     <!-- Glass morph box for theme toggle & hamburger -->
     <div
       class="flex items-center space-x-4 p-2 rounded-xl bg-white/30 dark:bg-black/30 backdrop-blur-md border border-white/20 dark:border-black/20"
-      style="min-width: 4rem;"
+          style="min-width: 4rem; height: 65px;"
     >
       <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition relative">
         <!-- Sun Icon (show only in dark mode) -->
