@@ -17,9 +17,9 @@
     id="spotify-album-art-mobile"
     src=""
     alt="Album Art"
-    class="w-full h-24 object-cover mb-2 rounded"
+    class="w-full h-28 object-cover mb-2 rounded"
   />
-  Developer Listening to Spotify
+  
   <p id="spotify-track-mobile" class="text-xs font-bold text-center truncate w-full text-black dark:text-white">Loading...</p>
   <p id="spotify-artist-mobile" class="text-xs text-center truncate w-full text-gray-700 dark:text-gray-300"></p>
   
@@ -73,7 +73,7 @@ Developer Listening to Spotify
       id="spotify-album-art"
       src=""
       alt="Album Art"
-      class="w-16 h-16 rounded-md hidden"
+      class="w-32 h-32 rounded-md hidden"
     />
     <div class="flex flex-col overflow-hidden">
       <p id="spotify-track" class="font-bold truncate">Loading...</p>
@@ -81,11 +81,39 @@ Developer Listening to Spotify
     </div>
   </div>
 </a>
-
 <script>
   let currentProgress = 0;
   let duration = 0;
   let isPlaying = false;
+
+  // Function to get dominant color from an image
+  function getDominantColor(imageUrl, callback) {
+    const img = new Image();
+    img.crossOrigin = 'Anonymous'; // Needed for cross-origin images
+    img.src = imageUrl;
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      const data = ctx.getImageData(0, 0, img.width, img.height).data;
+
+      let r = 0, g = 0, b = 0, count = 0;
+      for (let i = 0; i < data.length; i += 4) {
+        r += data[i];
+        g += data[i + 1];
+        b += data[i + 2];
+        count++;
+      }
+
+      r = Math.floor(r / count);
+      g = Math.floor(g / count);
+      b = Math.floor(b / count);
+
+      callback(`rgb(${r},${g},${b})`);
+    };
+  }
 
   async function fetchSpotifyStatus() {
     try {
@@ -115,7 +143,6 @@ Developer Listening to Spotify
         // Mobile
         mobileAlbumArt.src = data.album_art;
         mobileAlbumArt.classList.remove('hidden');
-        // mobileLogo.classList.add('hidden');
         mobileTrack.textContent = data.track;
         mobileArtist.textContent = data.artist;
         mobileLink.classList.remove('hidden');
@@ -135,6 +162,12 @@ Developer Listening to Spotify
           mobileLink.removeAttribute('href');
           mobileLink.classList.add('pointer-events-none');
         }
+
+        // **Dynamic background based on album art**
+        getDominantColor(data.album_art, (color) => {
+          link.style.background = color;        // Desktop
+          mobileLink.style.background = color;  // Mobile
+        });
 
         // Save progress and duration for smooth animation
         if (data.progress_ms && data.duration_ms) {
@@ -210,6 +243,7 @@ Developer Listening to Spotify
   fetchSpotifyStatus();
   setInterval(fetchSpotifyStatus, 10000);
 </script>
+
 
 <script>
   function toggleSpotifyViews() {
