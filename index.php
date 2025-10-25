@@ -1054,6 +1054,78 @@ include("robot.php");
   <!-- Draggable Containers -->
   <div id="project-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-16 transition-opacity duration-500 opacity-100">
 
+<!-- ATIERA HOTEL & RESTAURANT HR3 -->
+<div class="project-card bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move opacity-0 translate-y-8 transition-all duration-700 ease-out">
+  <button onclick="openImage('pictures/atiera.png')">
+    <img src="pictures/atiera.png" alt="ATIERA HOTEL & RESTAURANT HR3" class="rounded-lg mb-3 w-full object-cover h-40 cursor-pointer" />
+  </button>
+  <button onclick="openImage('pictures/atiera1.png')">
+    <img src="pictures/atiera1.png" alt="ATIERA HOTEL & RESTAURANT HR3" class="rounded-lg mb-3 w-full object-cover h-40 cursor-pointer" />
+  </button>
+  <button onclick="openImage('pictures/atiera2.png')">
+    <img src="pictures/atiera2.png" alt="ATIERA HOTEL & RESTAURANT HR3" class="rounded-lg mb-3 w-full object-cover h-40 cursor-pointer" />
+  </button>
+  <button onclick="openImage('pictures/atiera3.png')">
+    <img src="pictures/atiera3.png" alt="ATIERA HOTEL & RESTAURANT HR3" class="rounded-lg mb-4 w-full object-cover h-40 cursor-pointer" />
+  </button>
+
+  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">ATIERA HOTEL &amp; RESTAURANT HR3</h3>
+  <p class="text-gray-600 dark:text-gray-300 mb-3">
+    A hotel and restaurant HR system integrating management, automation, and AI-powered chatbot assistance.
+  </p>
+
+  <!-- Language Logos with Tooltips -->
+  <div class="flex space-x-3 items-center">
+    <div class="tooltip">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" class="w-6 h-6" />
+      <span class="tooltip-text">HTML5</span>
+    </div>
+    <div class="tooltip">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" class="w-6 h-6" />
+      <span class="tooltip-text">CSS3</span>
+    </div>
+    <div class="tooltip">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" class="w-6 h-6" />
+      <span class="tooltip-text">JavaScript</span>
+    </div>
+    <div class="tooltip">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP" class="w-6 h-6" />
+      <span class="tooltip-text">PHP</span>
+    </div>
+    <div class="tooltip">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" alt="Tailwind CSS" class="w-6 h-6" />
+      <span class="tooltip-text">Tailwind CSS</span>
+    </div>
+    <div class="tooltip">
+      <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="Firebase" class="w-6 h-6" />
+      <span class="tooltip-text">Firebase</span>
+    </div>
+
+    <!-- Discord Bot -->
+    <div class="tooltip">
+      <img src="https://cdn.worldvectorlogo.com/logos/discord-6.svg" alt="Discord Bot" class="w-6 h-6 bg-white rounded p-0.5 shadow-sm" />
+      <span class="tooltip-text">Discord Bot</span>
+    </div>
+
+    <!-- Gemini Chatbot (Inline SVG) -->
+    <div class="tooltip">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 rounded bg-white p-0.5 shadow-sm">
+        <defs>
+          <radialGradient id="geminiGradient" cx="0.3" cy="0.3" r="1.1">
+            <stop offset="0%" stop-color="#4285F4"/>
+            <stop offset="50%" stop-color="#9C27B0"/>
+            <stop offset="100%" stop-color="#FF4081"/>
+          </radialGradient>
+        </defs>
+        <circle cx="24" cy="24" r="20" fill="url(#geminiGradient)"/>
+        <circle cx="17" cy="24" r="6" fill="white" opacity="0.9"/>
+        <circle cx="31" cy="24" r="6" fill="white" opacity="0.9"/>
+      </svg>
+      <span class="tooltip-text">Gemini Chatbot</span>
+    </div>
+  </div>
+</div>
+
     <!-- Logistics System -->
     <div class="project-card bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 cursor-move opacity-0 translate-y-8 transition-all duration-700 ease-out">
       <button onclick="openImage('pictures/logistic1.png')">
