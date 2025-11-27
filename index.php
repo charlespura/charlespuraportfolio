@@ -203,6 +203,7 @@ html, body {
     <nav
       class="hidden md:flex space-x-12 px-6 py-3 rounded-xl bg-white/30 dark:bg-black/30 backdrop-blur-md border border-white/20 dark:border-black/20 max-w-xl mx-auto"
     >
+      <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Home</a>
       <a href="#about" class="hover:text-blue-600 dark:hover:text-blue-400 transition">About</a>
       <a href="#skills" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Skills</a>
       <a href="#projects" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Projects</a>
