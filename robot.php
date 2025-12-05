@@ -394,15 +394,16 @@ Developer Listening to Spotify
     </div>
     </div>
     
-   <div id="cv-button-wrapper" class="transition-transform duration-300 ease-in-out">
-    <a href="Charles Pura CV 2025.pdf" download 
-       class="inline-flex items-center bg-gradient-to-r from-blue-600 to-blue-800 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:from-blue-700 hover:to-blue-900 transition duration-300">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
-      </svg>
-      Download Resume
-    </a>
-  </div>
+<div id="cv-button-wrapper" class="transition-transform duration-300 ease-in-out">
+  <a href="https://docs.google.com/document/d/10EN7wnmXzQgZ7y9Jg4HDPTBJXgZWyLuSW6XfS--OE2k/export?format=pdf" download
+     class="inline-flex items-center bg-gradient-to-r from-blue-600 to-blue-800 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:from-blue-700 hover:to-blue-900 transition duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V4" />
+    </svg>
+    Download Resume
+  </a>
+</div>
+
 </section>
  <!-- Scroll Down Animation -->
   <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
