@@ -496,6 +496,9 @@ hamburger.addEventListener('click', () => {
 include("robot.php");
 ?>
 
+<?php
+include("f1.php");
+?>
 
 <section id="about" class="min-h-screen flex flex-col items-center justify-start bg-white dark:bg-black px-6 md:px-10 py-16">
   <h2 class="text-3xl font-bold mt-0 mb-8 text-black dark:text-white text-center">About</h2>
