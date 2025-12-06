@@ -166,18 +166,25 @@ html, body {
 
 <header class="w-full fixed top-0 left-0 z-50 transition-colors duration-500 px-4 py-3">
 
+
   <div class="max-w-7xl mx-auto flex justify-between items-center space-x-4">
+
+<!-- Glass morph box for logo + copy email / name -->
 <!-- Glass morph box for logo + copy email / name -->
 <div
   id="logo-box"
   class="flex items-center justify-start p-2 rounded-xl bg-white/30 dark:bg-black/30 backdrop-blur-md border border-white/20 dark:border-black/20"
   style="width: 100px; height: 65px;"
 >
-  <!-- Light mode logo -->
-  <img src="pictures/cplogoblack.png" alt="Charles Pura Logo" class="h-12 md:h-10 sm:h-9 block dark:hidden" />
-  <!-- Dark mode logo -->
-  <img src="pictures/cplogo.png" alt="Charles Pura Logo" class="h-12 md:h-10 sm:h-9 hidden dark:block" />
+  <!-- Logo clickable: goes to home section or homepage -->
+  <a href="#" class="flex items-center">
+    <!-- Light mode logo -->
+    <img src="pictures/cplogoblack.png" alt="Charles Pura Logo" class="h-12 md:h-10 sm:h-9 block dark:hidden" />
+    <!-- Dark mode logo -->
+    <img src="pictures/cplogo.png" alt="Charles Pura Logo" class="h-12 md:h-10 sm:h-9 hidden dark:block" />
+  </a>
 
+  <!-- Copy Email Button -->
   <button
     id="copy-email-btn"
     class="ml-3 text-sm text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap"
@@ -188,19 +195,19 @@ html, body {
     Email
   </button>
 
-
+  <!-- Facebook Icon -->
   <span
     id="name-text"
     class="ml-3 text-sm font-semibold text-gray-900 dark:text-gray-100 hidden select-none whitespace-nowrap"
   >
-     <!-- Facebook -->
-        <a href="https://web.facebook.com/charlespuracp" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="pointer-events-auto text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 transition">
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M22 12a10 10 0 10-11.5 9.87v-6.98H8v-2.9h2.5V9.4c0-2.48 1.49-3.86 3.77-3.86 1.09 0 2.23.2 2.23.2v2.46h-1.25c-1.23 0-1.62.77-1.62 1.56v1.87h2.77l-.44 2.9h-2.33v6.98A10 10 0 0022 12z"/>
-        </svg>
-        </a>
+    <a href="https://web.facebook.com/charlespuracp" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="pointer-events-auto text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600 transition">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M22 12a10 10 0 10-11.5 9.87v-6.98H8v-2.9h2.5V9.4c0-2.48 1.49-3.86 3.77-3.86 1.09 0 2.23.2 2.23.2v2.46h-1.25c-1.23 0-1.62.77-1.62 1.56v1.87h2.77l-.44 2.9h-2.33v6.98A10 10 0 0022 12z"/>
+      </svg>
+    </a>
   </span>
 </div>
+
 
     <!-- Glass morph box for nav (hidden on mobile) -->
     <nav
