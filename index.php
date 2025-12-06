@@ -167,15 +167,16 @@ html, body {
 <header class="w-full fixed top-0 left-0 z-50 transition-colors duration-500 px-4 py-3">
 
   <div class="max-w-7xl mx-auto flex justify-between items-center space-x-4">
-
- <!-- Glass morph box for logo + copy email / name -->
+<!-- Glass morph box for logo + copy email / name -->
 <div
   id="logo-box"
   class="flex items-center justify-start p-2 rounded-xl bg-white/30 dark:bg-black/30 backdrop-blur-md border border-white/20 dark:border-black/20"
-  style="width: 100px; height: 65px;" 
-
+  style="width: 100px; height: 65px;"
 >
-  <img src="pictures/cplogo.png" alt="Charles Pura Logo" class="h-12 md:h-10 sm:h-9" />
+  <!-- Light mode logo -->
+  <img src="pictures/cplogoblack.png" alt="Charles Pura Logo" class="h-12 md:h-10 sm:h-9 block dark:hidden" />
+  <!-- Dark mode logo -->
+  <img src="pictures/cplogo.png" alt="Charles Pura Logo" class="h-12 md:h-10 sm:h-9 hidden dark:block" />
 
   <button
     id="copy-email-btn"
@@ -186,6 +187,7 @@ html, body {
     <br>
     Email
   </button>
+
 
   <span
     id="name-text"
@@ -200,15 +202,14 @@ html, body {
   </span>
 </div>
 
-
-
     <!-- Glass morph box for nav (hidden on mobile) -->
     <nav
-      class="hidden md:flex space-x-12 px-6 py-3 rounded-xl bg-white/30 dark:bg-black/30 backdrop-blur-md border border-white/20 dark:border-black/20 max-w-xl mx-auto"
+      class="hidden md:flex space-x-12 px-6 py-3 rounded-xl bg-white/30 dark:bg-black/30 backdrop-blur-md border border-white/20 dark:border-black/20 max-w-fit mx-auto"
     >
       <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Home</a>
       <a href="#about" class="hover:text-blue-600 dark:hover:text-blue-400 transition">About</a>
       <a href="#skills" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Skills</a>
+       <a href="#certificates" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Certificates</a>
       <a href="#projects" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Projects</a>
       <a href="#contact" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Contact</a>
     </nav>
@@ -280,8 +281,10 @@ html, body {
     class="hidden md:hidden flex-col space-y-4 bg-white/90 dark:bg-black/90 backdrop-blur p-4 rounded-md mx-4 mt-2 text-sm transform transition-all duration-300 ease-in-out"
   
   >
+    <a href="#" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Home</a>
     <a href="#about" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">About</a>
     <a href="#skills" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Skills</a>
+      <a href="#certificates" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Certificates</a>
     <a href="#projects" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Projects</a>
     <a href="#contact" class="block hover:text-blue-600 dark:hover:text-blue-400 transition">Contact</a>
   </nav>
@@ -842,7 +845,6 @@ include("f1.php");
 <!-- Font Awesome for icons -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
-
 <!-- Skills Section -->
 <section id="skills" class="min-h-screen flex flex-col items-center justify-start text-center bg-[#f5f5f5] dark:bg-gray-800 px-4 transition-colors duration-500 py-16">
   <h2 class="text-3xl font-bold mt-0 mb-8 text-black dark:text-white text-center">Skills</h2>
@@ -851,39 +853,7 @@ include("f1.php");
   <!-- Scrollable Skills Row (Top: Left to Right) -->
   <div class="relative w-full overflow-hidden">
     <div class="flex w-max animate-scroll-right gap-8">
-      <div class="flex gap-8">
-        <!-- Skills -->
-<div class="skill-card bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 w-[500px] py-12 px-15">
-  <h3 class="text-4xl font-semibold text-blue-600 dark:text-blue-400 mb-4 flex items-center gap-4">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5 Logo" class="h-12 w-12 object-contain" />
-    HTML
-  </h3>
-  <p class="text-lg">Structure and markup for web pages.</p>
-</div>
-
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[350px]">
-          <h3 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3 Logo" class="h-6 w-6 object-contain" />
-            CSS
-          </h3>
-          <p>Styling and layout of web pages.</p>
-        </div>
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-yellow-500 dark:text-yellow-400 min-w-[350px]">
-          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript Logo" class="h-6 w-6 object-contain" />
-            JavaScript
-          </h3>
-          <p>Interactivity and logic for websites.</p>
-        </div>
-        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-purple-600 dark:text-purple-400 min-w-[350px]">
-          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP Logo" class="h-6 w-6 object-contain" />
-            PHP
-          </h3>
-          <p>Server-side scripting for web apps.</p>
-        </div>
-      </div>
-      <!-- Duplicate for loop -->
+      <!-- First set of skills -->
       <div class="flex gap-8">
         <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[350px]">
           <h3 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
@@ -892,6 +862,7 @@ include("f1.php");
           </h3>
           <p>Structure and markup for web pages.</p>
         </div>
+
         <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[350px]">
           <h3 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3 Logo" class="h-6 w-6 object-contain" />
@@ -899,6 +870,7 @@ include("f1.php");
           </h3>
           <p>Styling and layout of web pages.</p>
         </div>
+
         <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-yellow-500 dark:text-yellow-400 min-w-[350px]">
           <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript Logo" class="h-6 w-6 object-contain" />
@@ -906,6 +878,58 @@ include("f1.php");
           </h3>
           <p>Interactivity and logic for websites.</p>
         </div>
+
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-yellow-600 dark:text-yellow-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" alt="Firebase Logo" class="h-6 w-6 object-contain" />
+            Firebase
+          </h3>
+          <p>Tools for building modern apps.</p>
+        </div>
+
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-purple-600 dark:text-purple-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP Logo" class="h-6 w-6 object-contain" />
+            PHP
+          </h3>
+          <p>Server-side scripting for web apps.</p>
+        </div>
+      </div>
+
+      <!-- Duplicate for smooth scroll -->
+      <div class="flex gap-8">
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[350px]">
+          <h3 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5 Logo" class="h-6 w-6 object-contain" />
+            HTML
+          </h3>
+          <p>Structure and markup for web pages.</p>
+        </div>
+
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-gray-600 dark:text-gray-300 min-w-[350px]">
+          <h3 class="text-2xl font-semibold text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3 Logo" class="h-6 w-6 object-contain" />
+            CSS
+          </h3>
+          <p>Styling and layout of web pages.</p>
+        </div>
+
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-yellow-500 dark:text-yellow-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript Logo" class="h-6 w-6 object-contain" />
+            JavaScript
+          </h3>
+          <p>Interactivity and logic for websites.</p>
+        </div>
+
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-yellow-600 dark:text-yellow-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" alt="Firebase Logo" class="h-6 w-6 object-contain" />
+            Firebase
+          </h3>
+          <p>Tools for building modern apps.</p>
+        </div>
+
         <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-purple-600 dark:text-purple-400 min-w-[350px]">
           <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP Logo" class="h-6 w-6 object-contain" />
@@ -921,14 +945,13 @@ include("f1.php");
   <div class="relative w-full overflow-hidden mt-8">
     <div class="flex w-max animate-scroll-left gap-8">
       <div class="flex gap-8">
-        <!-- Skills -->
-       <div class="skill-card bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-green-500 dark:text-green-400 w-[500px] py-12 px-15">
-  <h3 class="text-4xl font-semibold mb-4 flex items-center gap-4">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL Logo" class="h-12 w-12 object-contain" />
-    SQL
-  </h3>
-  <p class="text-lg">Database management and queries.</p>
-</div>
+        <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-green-500 dark:text-green-400 min-w-[350px]">
+          <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL Logo" class="h-6 w-6 object-contain" />
+            SQL
+          </h3>
+          <p>Database management and queries.</p>
+        </div>
 
         <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-teal-500 dark:text-teal-400 min-w-[350px]">
           <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
@@ -937,6 +960,7 @@ include("f1.php");
           </h3>
           <p>Building Android mobile applications.</p>
         </div>
+
         <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-red-500 dark:text-red-400 min-w-[350px]">
           <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java Logo" class="h-6 w-6 object-contain" />
@@ -944,6 +968,7 @@ include("f1.php");
           </h3>
           <p>Programming language for Android apps.</p>
         </div>
+
         <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-indigo-600 dark:text-indigo-400 min-w-[350px]">
           <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-plain.svg" alt="Bootstrap Logo" class="h-6 w-6 object-contain" />
@@ -951,6 +976,7 @@ include("f1.php");
           </h3>
           <p>CSS framework for responsive design.</p>
         </div>
+
         <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-blue-500 dark:text-blue-400 min-w-[350px]">
           <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/250px-Tailwind_CSS_Logo.svg.png" alt="Tailwind CSS Logo" class="h-6 w-6 object-contain" />
@@ -959,6 +985,7 @@ include("f1.php");
           <p>Utility-first CSS framework for custom designs.</p>
         </div>
       </div>
+
       <!-- Duplicate -->
       <div class="flex gap-8">
         <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-green-500 dark:text-green-400 min-w-[350px]">
@@ -968,6 +995,7 @@ include("f1.php");
           </h3>
           <p>Database management and queries.</p>
         </div>
+
         <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-teal-500 dark:text-teal-400 min-w-[350px]">
           <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" alt="Android Studio Logo" class="h-6 w-6 object-contain" />
@@ -975,6 +1003,7 @@ include("f1.php");
           </h3>
           <p>Building Android mobile applications.</p>
         </div>
+
         <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-red-500 dark:text-red-400 min-w-[350px]">
           <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java Logo" class="h-6 w-6 object-contain" />
@@ -982,6 +1011,7 @@ include("f1.php");
           </h3>
           <p>Programming language for Android apps.</p>
         </div>
+
         <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-indigo-600 dark:text-indigo-400 min-w-[350px]">
           <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-plain.svg" alt="Bootstrap Logo" class="h-6 w-6 object-contain" />
@@ -989,6 +1019,7 @@ include("f1.php");
           </h3>
           <p>CSS framework for responsive design.</p>
         </div>
+
         <div class="skill-card p-6 bg-white dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition hover:scale-105 text-blue-500 dark:text-blue-400 min-w-[350px]">
           <h3 class="text-2xl font-semibold mb-2 flex items-center gap-2">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/250px-Tailwind_CSS_Logo.svg.png" alt="Tailwind CSS Logo" class="h-6 w-6 object-contain" />
@@ -1000,7 +1031,6 @@ include("f1.php");
     </div>
   </div>
 </section>
-
 
 <style>
   @keyframes scroll-left {
@@ -1030,7 +1060,6 @@ include("f1.php");
     scrollbar-width: none;
   }
 
-  /* Pause animation only on hover */
   .animate-scroll-left:hover,
   .animate-scroll-right:hover {
     animation-play-state: paused;
@@ -1038,19 +1067,22 @@ include("f1.php");
   }
 </style>
 
-  <!-- Vertical Line & Arrow (connector) -->
-  <a href="#projects" class="flex flex-col items-center mt-2 group">
-    <div class="w-1 h-16 bg-blue-600 dark:bg-blue-500 transition-transform group-hover:scale-y-110"></div>
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-600 dark:text-blue-500 mt-1 group-hover:translate-y-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-    </svg>
-  </a>
-</div>
+  <?php
+include("certificate.php");
+?>
 
+<!-- Arrow above Projects section -->
+<a href="#projects" class="flex flex-col items-center mt-8">
+  <div class="w-1 h-16 bg-blue-600 dark:bg-blue-500 transition-transform group-hover:scale-y-110"></div>
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-600 dark:text-blue-500 mt-1 group-hover:translate-y-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+  </svg>
+</a>
 
 <!-- Projects section -->
-<section id="projects" class="min-h-screen flex flex-col items-center justify-center text-center bg-white dark:bg-black px-4 transition-colors duration-500 py-16">
-  <h2 class="text-3xl font-bold mb-4 text-black dark:text-white">Projects</h2>
+<section id="projects" class="min-h-screen flex flex-col items-center justify-center text-center bg-[#f5f5f5] dark:bg-gray-800 px-4 transition-colors duration-500 py-16">
+  <h2 class="text-4xl font-bold mb-8">Projects</h2>
+
   <p class="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mb-12">
     I've created <span class="font-semibold text-blue-600 dark:text-blue-400">173+</span> and counting — including <strong>Diagrams</strong>, <strong>Web Systems</strong>, <strong>CRUD Operations</strong>, <strong>Android Apps</strong>, and more. Check out some of my featured work below!
   </p>
@@ -1555,9 +1587,11 @@ include("f1.php");
     handleResponsiveDragSwap();
   });
 </script>
+
 <!-- Contact Section -->
-<section id="contact" class="min-h-screen flex flex-col items-center justify-center text-center bg-[#f5f5f5] dark:bg-gray-800 px-4 transition-colors duration-500 py-16">
-  <h2 class="text-3xl font-bold mb-4 text-black dark:text-white">Contact</h2>
+ <section id="contact" class="min-h-screen flex flex-col items-center justify-center text-center bg-white dark:bg-black px-4 transition-colors duration-500 py-16">
+ 
+ <h2 class="text-3xl font-bold mb-4 text-black dark:text-white">Contact</h2>
   <p class="text-lg text-gray-700 dark:text-gray-300 mb-12">
     I'd love to hear from you! Fill out the form below or use the links to connect with me.
   </p>
@@ -1708,16 +1742,15 @@ include("f1.php");
 
 
   
-  
-  <!-- Footer -->
-  <footer class="bg-white dark:bg-black text-black dark:text-white py-4">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p>&copy; 2025 Charles Pura. All rights reserved.</p>
-      <div class="flex justify-center space-x-4 mt-2">
-
-      </div>
+<!-- Footer -->
+<footer class="flex flex-col items-center justify-center text-center bg-[#f5f5f5] dark:bg-gray-800 text-black dark:text-white px-4 py-8 transition-colors duration-500">
+  <div class="max-w-7xl w-full">
+    <p class="text-sm">&copy; 2025 Charles Pura. All rights reserved.</p>
+    <div class="flex justify-center space-x-4 mt-2">
+      <!-- Add social icons or links here -->
     </div>
-  </footer>
+  </div>
+</footer>
 
   <!-- Theme Toggle Script -->
   <script>
